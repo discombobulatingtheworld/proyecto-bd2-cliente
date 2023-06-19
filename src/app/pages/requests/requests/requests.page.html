@@ -1,0 +1,37 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="end" class="padding-right-10">
+      <ion-button (click)="onFilterRequests()">
+        <ion-icon slot="icon-only" name="filter"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{ title }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-segment value="search" [(ngModel)]="activeComponent" (ionChange)="onSegmentChange($event)">
+    <ion-segment-button value="search">
+      <ion-label>Buscar Solicitudes</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="active">
+      <ion-label>Solicitudes Activas</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="activeComponent">
+    <app-requests-search *ngSwitchCase="'search'"></app-requests-search>
+    <app-requests-active *ngSwitchCase="'active'"></app-requests-active>
+  </div>
+</ion-content>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonicModule, NavController } from '@ionic/angular';
+import { IonicModule, MenuController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -24,14 +24,16 @@ export class LoginPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private navCtrl: NavController,
+    private menuCtrl: MenuController
   ) { }
 
   ngOnInit() {
+    this.menuCtrl.enable(false);
   }
 
   protected async login() {
-    this.processing = true;
     //this.navCtrl.navigateRoot('/home');
+    this.navCtrl.navigateRoot('/requests/requests');
   }
 
   protected setAlertOpen(isOpen: boolean) {
@@ -40,5 +42,9 @@ export class LoginPage implements OnInit {
 
   protected onSubmit() {
     this.login();
+  }
+
+  protected onRegister() {
+    this.navCtrl.navigateForward('/authentication/registration/start');
   }
 }

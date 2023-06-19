@@ -25,11 +25,11 @@
             <ion-input label="Contraseña" label-placement="stacked" type="password" fill="outline" formControlName="password" id="inputPassword" 
               placeholder="Contraseña"></ion-input>
             <br>
-            <ion-button shape="round" expand="block" fill="solid" type="submit">
+            <ion-button shape="round" expand="block" fill="solid" [disabled]="(!loginEntryForm.form.valid) || this.processing"  type="submit">
               Iniciar Sesión
             </ion-button>
           </form>
-          <ion-button shape="round" expand="block" fill="outline" [disabled]="(!loginEntryForm.form.valid) || this.processing">
+          <ion-button shape="round" expand="block" fill="outline"(click)="onRegister()">
             Registrarse
           </ion-button>
         </ion-col>

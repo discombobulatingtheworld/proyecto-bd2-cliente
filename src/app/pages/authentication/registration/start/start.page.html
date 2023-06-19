@@ -1,0 +1,67 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="onBack()">
+      <ion-back-button default-href="#"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Registro</ion-title>
+    <ion-buttons slot="primary" class="padding-right-10">
+      <ion-button (click)="onNext()">
+        <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-buttons slot="start" (click)="onBack()">
+        <ion-back-button default-href="#"></ion-back-button>
+      </ion-buttons>
+      <ion-title size="large">Registro</ion-title>
+      <ion-buttons slot="primary" class="padding-right-10">
+        <ion-button (click)="onNext()">
+          <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <br>
+
+  <div class="centered-content">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+
+          <form [formGroup]="registrationStartForm" #registrationStartEntryForm="ngForm">
+            <ion-input label="Correo Electrónico" label-placement="stacked" type="text" fill="outline"
+              formControlName="email" id="inputEmail" placeholder="Correo Electrónico"></ion-input>
+            <br>
+            <ion-input label="Nombre de Usuario" label-placement="stacked" type="text" fill="outline"
+              formControlName="nick" id="inputNick" placeholder="Nombre de Usuario"></ion-input>
+            <br>
+
+            <ion-input label="Contraseña" label-placement="stacked" type="password" fill="outline"
+              formControlName="password" id="inputPassword" placeholder="Contraseña"></ion-input>
+            <br>
+            <ion-input label="Confirmar Contraseña" label-placement="stacked" type="password" fill="outline"
+              formControlName="passwordConfirmation" id="inputPasswordConfirmation"
+              placeholder="Contraseña"></ion-input>
+            <br>
+            <ion-input label="Nombre" label-placement="stacked" type="text" fill="outline" formControlName="name"
+              id="inputName" placeholder="Nombre"></ion-input>
+            <br>
+            <ion-input label="Apellido" label-placement="stacked" type="text" fill="outline"
+              formControlName="lastName" id="inputLastName" placeholder="Apellido"></ion-input>
+            <br>
+            <ion-input label="Fecha de Nacimiento" label-placement="stacked" type="date" fill="outline"
+              formControlName="birthDate" id="inputBirthDate" placeholder="Fecha de Nacimiento"></ion-input>
+          </form>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+</ion-content>
