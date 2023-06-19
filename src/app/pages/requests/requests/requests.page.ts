@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { SearchComponent } from 'src/app/components/requests/search/search.component';  
 import { ActiveComponent } from 'src/app/components/requests/active/active.component';
 
@@ -16,9 +16,13 @@ export class RequestsPage implements OnInit {
   protected title: string = 'Solicitudes';
   protected activeComponent: string = 'search';
 
-  constructor() { }
+  constructor(
+    private navCtrl: NavController,
+    private menuCtrl: MenuController
+  ) { }
 
   ngOnInit() {
+    this.menuCtrl.enable(true);
   }
 
   protected onFilterRequests() {
@@ -27,5 +31,8 @@ export class RequestsPage implements OnInit {
 
   protected onSegmentChange(event: any) {
     this.activeComponent = event.detail.value;
+  }
+
+  protected onCreateRequest() {
   }
 }

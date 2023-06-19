@@ -7,7 +7,7 @@ export class SolicitudCreacion {
     public requesterId: number;
     public requesterName: string;
     public requesterLastName: string;
-    public skills: number[];
+    public skill: number;
 
     constructor() {
         this.title = '';
@@ -16,7 +16,7 @@ export class SolicitudCreacion {
         this.requesterId = 0;
         this.requesterName = '';
         this.requesterLastName = '';
-        this.skills = [];
+        this.skill = 0;
     }
 
     public set(property: string, value: any): SolicitudCreacion {

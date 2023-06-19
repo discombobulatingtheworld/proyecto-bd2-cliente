@@ -34,4 +34,10 @@
     <app-requests-search *ngSwitchCase="'search'"></app-requests-search>
     <app-requests-active *ngSwitchCase="'active'"></app-requests-active>
   </div>
+
+  <ion-fab slot="fixed" vertical="bottom">
+    <ion-button shape="round" expand="block" fill="solid" type="button" (click)="onCreateRequest()">
+      Solicitar Asistencia
+    </ion-button>
+  </ion-fab>
 </ion-content>

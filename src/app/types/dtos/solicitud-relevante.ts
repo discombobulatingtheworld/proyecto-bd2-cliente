@@ -12,7 +12,7 @@ export class SolicitudRelevante {
     public requesterName: string;
     public requesterLastName: string;
     public requesterConnection: string;
-    public skills: Habilidad[];
+    public skill: Habilidad | null;
 
     constructor() {
         this.id = 0;
@@ -24,7 +24,7 @@ export class SolicitudRelevante {
         this.requesterName = '';
         this.requesterLastName = '';
         this.requesterConnection = '';
-        this.skills = [];
+        this.skill = null;
     }
 
     public set(property: string, value: any): SolicitudRelevante {

@@ -17,7 +17,7 @@ export class SolicitudActiva {
     public providerLastName: string;
     public requesterProviderConnection: string;
     public activeUserRol: RolUsuario | null;
-    public skills: Habilidad[];
+    public skill: Habilidad | null;
 
     constructor() {
         this.id = 0;
@@ -33,7 +33,7 @@ export class SolicitudActiva {
         this.providerLastName = '';
         this.requesterProviderConnection = '';
         this.activeUserRol = null;
-        this.skills = [];
+        this.skill = null;
     }
 
     public set(property: string, value: any): SolicitudActiva {
