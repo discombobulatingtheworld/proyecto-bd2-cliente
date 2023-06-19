@@ -1,13 +1,42 @@
-<ion-header [translucent]="true">
+<!--<ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>login</ion-title>
   </ion-toolbar>
 </ion-header>
-
+-->
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <!--<ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">login</ion-title>
     </ion-toolbar>
-  </ion-header>
+  </ion-header>-->
+
+  <div class="centered-content">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-img src="assets/img/logo.png"></ion-img>
+          <br>
+          <br>
+          <form [formGroup]="loginForm" #loginEntryForm="ngForm" (ngSubmit)="onSubmit()">
+            <ion-input label="Correo Electrónico" label-placement="stacked" type="text" fill="outline" formControlName="email" id="inputEmail"
+              placeholder="Correo Electrónico"></ion-input>
+            <br>
+            <ion-input label="Contraseña" label-placement="stacked" type="password" fill="outline" formControlName="password" id="inputPassword" 
+              placeholder="Contraseña"></ion-input>
+            <br>
+            <ion-button shape="round" expand="block" fill="solid" type="submit">
+              Iniciar Sesión
+            </ion-button>
+          </form>
+          <ion-button shape="round" expand="block" fill="outline" [disabled]="(!loginEntryForm.form.valid) || this.processing">
+            Registrarse
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>
+
+<ion-alert [isOpen]="isAlertOpen" header="Error" [message]="this.alertMessage" [buttons]="alertButtons"
+  (didDismiss)="setAlertOpen(false)"></ion-alert>
