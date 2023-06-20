@@ -21,6 +21,10 @@ export class ActiveComponent implements OnInit {
   ngOnInit() { }
 
   protected onSelectRequest(request: SolicitudActiva) {
-    //this.navCtrl.navigateForward('/requests/detail');
+    this.navCtrl.navigateForward('/requests/request/active', {
+      state: {
+        requestId: request.id
+      }
+    });
   }
 }

@@ -18,6 +18,9 @@ export class CompletePage implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
     this.menuCtrl.enable(false);
   }
 

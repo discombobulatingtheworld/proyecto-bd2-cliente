@@ -1,0 +1,10 @@
+<!-- Chat message bubble using ionic and angular -->
+<div class="chat-bubble" [ngClass]="{ 'deleted': message.deleted }">
+  <div class="message-info">
+    <span class="sender-name">{{ message.senderName }}</span>
+    <span class="time-stamp">{{ message.timeStamp | date:'mediumTime' }}</span>
+  </div>
+  <div class="message-content">
+    {{ message.contents }}
+  </div>
+</div>

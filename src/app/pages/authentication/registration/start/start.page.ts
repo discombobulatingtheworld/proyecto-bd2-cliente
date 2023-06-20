@@ -36,6 +36,9 @@ export class StartPage implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
     this.menuCtrl.enable(false);
   }
 

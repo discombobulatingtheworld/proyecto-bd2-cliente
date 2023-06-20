@@ -30,6 +30,9 @@ export class DetailsPage implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
     this.menuCtrl.enable(false);
   }
 

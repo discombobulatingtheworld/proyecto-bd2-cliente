@@ -11,7 +11,7 @@ export class SolicitudRelevante {
     public requesterId: number;
     public requesterName: string;
     public requesterLastName: string;
-    public requesterConnection: string;
+    public requesterProviderConnection: string;
     public skill: Habilidad | null;
 
     constructor() {
@@ -23,7 +23,7 @@ export class SolicitudRelevante {
         this.requesterId = 0;
         this.requesterName = '';
         this.requesterLastName = '';
-        this.requesterConnection = '';
+        this.requesterProviderConnection = '';
         this.skill = null;
     }
 

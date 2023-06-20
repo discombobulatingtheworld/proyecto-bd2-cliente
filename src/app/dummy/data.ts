@@ -3,6 +3,8 @@ import { SolicitudRelevante } from "../types/dtos/solicitud-relevante";
 import { SolicitudActiva } from "../types/dtos/solicitud-activa";
 import { RolUsuario } from "../types/dtos/rol-usuario";
 import { EstadoSolicitud } from "../types/dtos/estado-solicitud";
+import { Solicitud } from "../types/dtos/solicitud";
+import { Mensaje } from "../types/dtos/mensaje";
 
 export const SKILLS: Habilidad[] = [
     new Habilidad()
@@ -71,7 +73,7 @@ export const RELEVANT_REQUESTS: SolicitudRelevante[] = [
     .set('requesterId', 1)
     .set('requesterName', 'Juan')
     .set('requesterLastName', 'Perez')
-    .set('requesterConnection', 'Amigo')
+    .set('requesterProviderConnection', 'Amigo')
     .set('skill', SKILLS[8]),
     new SolicitudRelevante()
     .set('id', 2)
@@ -82,7 +84,7 @@ export const RELEVANT_REQUESTS: SolicitudRelevante[] = [
     .set('requesterId', 2)
     .set('requesterName', 'Maria')
     .set('requesterLastName', 'Gomez')
-    .set('requesterConnection', 'Desconocido')
+    .set('requesterProviderConnection', 'Desconocido')
     .set('skill', SKILLS[3]),
     new SolicitudRelevante()
     .set('id', 3)
@@ -93,8 +95,91 @@ export const RELEVANT_REQUESTS: SolicitudRelevante[] = [
     .set('requesterId', 3)
     .set('requesterName', 'Pedro')
     .set('requesterLastName', 'Rodriguez')
-    .set('requesterConnection', 'Amigo')
+    .set('requesterProviderConnection', 'Amigo')
     .set('skill', SKILLS[4]),
+]
+
+export const REQUESTS: Solicitud[] = [
+    new Solicitud()
+    .set('id', 1)
+    .set('title', 'Computadora muy lenta')
+    .set('description', 'Mi computadora esta muy lenta y no se que hacer')
+    .set('timeStart', new Date().setMonth(new Date().getMonth() - 1))
+    .set('location', 'Calle 1234')
+    .set('requesterId', 1)
+    .set('requesterName', 'Juan')
+    .set('requesterLastName', 'Perez')
+    .set('providerId', 0)
+    .set('providerName', '')
+    .set('providerLastName', '')
+    .set('requesterProviderConnection', '')
+    .set('activeUserRol', null)
+    .set('skill', SKILLS[8])
+    .set('status', EstadoSolicitud.Abierta),
+    new Solicitud()
+    .set('id', 2)
+    .set('title', 'Cocina rota')
+    .set('description', 'Mi cocina esta rota y no se que hacer')
+    .set('timeStart', new Date().setMonth(new Date().getMonth() - 1))
+    .set('location', 'Calle 5643')
+    .set('requesterId', 2)
+    .set('requesterName', 'Maria')
+    .set('requesterLastName', 'Gomez')
+    .set('providerId', 0)
+    .set('providerName', '')
+    .set('providerLastName', '')
+    .set('requesterProviderConnection', '')
+    .set('activeUserRol', null)
+    .set('skill', SKILLS[3])
+    .set('status', EstadoSolicitud.Abierta),
+    new Solicitud()
+    .set('id', 3)
+    .set('title', 'Pintura de paredes')
+    .set('description', 'Necesito pintar las paredes de mi casa')
+    .set('timeStart', new Date().setMonth(new Date().getMonth() - 1))
+    .set('location', 'Calle 8645')
+    .set('requesterId', 3)
+    .set('requesterName', 'Pedro')
+    .set('requesterLastName', 'Rodriguez')
+    .set('providerId', 0)
+    .set('providerName', '')
+    .set('providerLastName', '')
+    .set('requesterProviderConnection', '')
+    .set('activeUserRol', null)
+    .set('skill', SKILLS[4])
+    .set('status', EstadoSolicitud.Abierta),
+    new Solicitud()
+    .set('id', 4)
+    .set('title', 'Caño roto')
+    .set('description', 'Tengo un caño roto en mi casa')
+    .set('timeStart', new Date().setMonth(new Date().getMonth() - 1))
+    .set('location', 'Calle 1092')
+    .set('requesterId', 4)
+    .set('requesterName', 'Jose')
+    .set('requesterLastName', 'Gonzalez')
+    .set('providerId', 5)
+    .set('providerName', 'Gaius')
+    .set('providerLastName', 'van Baelsar')
+    .set('requesterProviderConnection', 'Amigo')
+    .set('activeUserRol', RolUsuario.Ayudante)
+    .set('skill', SKILLS[0])
+    .set('status', EstadoSolicitud.Activa),
+    new Solicitud()
+    .set('id', 5)
+    .set('title', 'Cortar pasto')
+    .set('description', 'Necesito cortar el pasto de mi casa')
+    .set('timeStart', new Date().setMonth(new Date().getMonth() - 1))
+    .set('location', 'Calle 1091')
+    .set('requesterId', 5)
+    .set('requesterName', 'Gaius')
+    .set('requesterLastName', 'van Baelsar')
+    .set('providerId', 0)
+    .set('providerName', '')
+    .set('providerLastName', '')
+    .set('requesterProviderConnection', '')
+    .set('activeUserRol', RolUsuario.Solicitante)
+    .set('skill', SKILLS[5])
+    .set('status', EstadoSolicitud.Abierta)
 ]
 
 export const ACTIVE_REQUESTS: SolicitudActiva[] = [
@@ -130,4 +215,25 @@ export const ACTIVE_REQUESTS: SolicitudActiva[] = [
     .set('activeUserRol', RolUsuario.Solicitante)
     .set('skill', SKILLS[5])
     .set('status', EstadoSolicitud.Abierta)
+]
+
+export const MESSAGES: Mensaje[] = [
+    new Mensaje()
+    .set('requestId', 4)
+    .set('messageId', 1)
+    .set('timeStamp', new Date().setDate(new Date().getDate() - 1))
+    .set('senderId', 4)
+    .set('senderName', 'Jose')
+    .set('senderLastName', 'Gonzalez')
+    .set('contents', 'Hola, necesito que vengas a mi casa a arreglar el caño')
+    .set('deleted', false),
+    new Mensaje()
+    .set('requestId', 4)
+    .set('messageId', 2)
+    .set('timeStamp', new Date().setHours(new Date().getHours() - 1))
+    .set('senderId', 5)
+    .set('senderName', 'Gaius')
+    .set('senderLastName', 'van Baelsar')
+    .set('contents', 'Hola, no hay problema, cuando queres que vaya?')
+    .set('deleted', false),
 ]

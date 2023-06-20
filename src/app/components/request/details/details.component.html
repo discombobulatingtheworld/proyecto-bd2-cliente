@@ -1,33 +1,8 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start" (click)="onBack()">
-      <ion-back-button default-href="#"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Solicitud</ion-title>
-    <ion-buttons slot="primary" class="padding-right-10">
-      <ion-button (click)="onAccept()">
-        <ion-icon slot="icon-only" name="thumbs-up"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-buttons slot="start" (click)="onBack()">
-        <ion-back-button default-href="#"></ion-back-button>
-      </ion-buttons>
-      <ion-title size="large">Solicitud</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <br>
-
-  <div class="centered-content">
-    <ion-grid>
-      <ion-row>
-        <ion-col size="12">
+<div class="centered-content">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <div *ngIf="request">
           <ion-input label="Solicitud" placeholder="Solicitud" class="ion-text-end" [readonly]="true"
             [(ngModel)]="request.title"></ion-input>
           <ion-input label="Solicitante" placeholder="Solicitante" class="ion-text-end" [readonly]="true"
@@ -40,10 +15,11 @@
             labelPlacement="stacked"></ion-input>
           <ion-input label="Habilidad" placeholder="Habilidad" class="ion-text-end" [readonly]="true"
             [(ngModel)]="request.skill!.name"></ion-input>
-
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-
-</ion-content>
+        </div>
+        <div *ngIf="!request">
+          <ion-text color="danger">No se ha encontrado la solicitud</ion-text>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>

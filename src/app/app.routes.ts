@@ -46,7 +46,21 @@ export const routes: Routes = [
       },
       {
         path: 'request',
-        loadComponent: () => import('./pages/requests/request/request.page').then( m => m.RequestPage)
+        children: [
+          {
+            path: 'details',
+            loadComponent: () => import('./pages/requests/request/details/details.page').then( m => m.DetailsPage)
+          },
+          {
+            path: 'active',
+            loadComponent: () => import('./pages/requests/request/active/active.page').then( m => m.ActivePage)
+          },
+          {
+            path: '',
+            redirectTo: 'details',
+            pathMatch: 'full'
+          }
+        ]
       },
       {
         path: 'create',

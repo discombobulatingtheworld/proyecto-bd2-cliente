@@ -1,7 +1,7 @@
 export class Mensaje {
     [key: string]: any;
 
-    public solicitudId: number;
+    public requestId: number;
     public messageId: number;
     public timeStamp: Date;
     public senderId: number;
@@ -11,7 +11,7 @@ export class Mensaje {
     public deleted: boolean;
 
     constructor() {
-        this.solicitudId = 0;
+        this.requestId = 0;
         this.messageId = 0;
         this.timeStamp = new Date();
         this.senderId = 0;

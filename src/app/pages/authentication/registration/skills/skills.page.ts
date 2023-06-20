@@ -27,8 +27,10 @@ export class SkillsPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.menuCtrl.enable(false);
+  }
 
+  ionViewWillEnter() {
+    this.menuCtrl.enable(false);
   }
 
   protected onBack() {

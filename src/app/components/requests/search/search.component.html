@@ -4,8 +4,8 @@
       <ion-col size="12">
 
         <ion-list lines="none">
-          <ion-item *ngFor="let request of relevantRequests" (click)="onSelectRequest(request)">
-            <ion-card color="primary">
+          <ion-item *ngFor="let request of relevantRequests">
+            <ion-card color="primary" (click)="onSelectRequest(request)">
               <ion-card-content>
                 <ion-card-subtitle>{{request.skill!.name}}</ion-card-subtitle>
                 <ion-card-title>{{request.title}}</ion-card-title>

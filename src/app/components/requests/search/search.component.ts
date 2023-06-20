@@ -21,6 +21,10 @@ export class SearchComponent  implements OnInit {
   ngOnInit() { }
 
   protected onSelectRequest(request: SolicitudRelevante) {
-    //this.navCtrl.navigateForward('/requests/detail');
+    this.navCtrl.navigateForward('/requests/request/details', {
+      state: {
+        requestId: request.id
+      }
+    });
   }
 }

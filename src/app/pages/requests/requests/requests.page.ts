@@ -22,6 +22,9 @@ export class RequestsPage implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
     this.menuCtrl.enable(true);
   }
 

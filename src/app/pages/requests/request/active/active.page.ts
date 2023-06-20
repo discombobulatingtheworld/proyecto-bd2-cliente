@@ -3,19 +3,23 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { Solicitud } from 'src/app/types/dtos/solicitud';
+import { FinalizeComponent } from 'src/app/components/request/finalize/finalize.component';
+import { ChatComponent } from 'src/app/components/request/chat/chat.component';
+import { DetailsComponent } from 'src/app/components/request/details/details.component';
 import { REQUESTS } from 'src/app/dummy/data';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-details',
-  templateUrl: './details.page.html',
-  styleUrls: ['./details.page.scss'],
+  selector: 'app-active',
+  templateUrl: './active.page.html',
+  styleUrls: ['./active.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [IonicModule, CommonModule, FormsModule, DetailsComponent, ChatComponent, FinalizeComponent]
 })
-export class DetailsPage implements OnInit {
+export class ActivePage implements OnInit {
   private requestId!: number;
-  protected request!: Solicitud;
+  public request!: Solicitud;
+  protected activeComponent: string = 'details';
 
   constructor(
     private navCtrl: NavController,
@@ -36,7 +40,8 @@ export class DetailsPage implements OnInit {
     this.navCtrl.navigateBack('/requests/requests');
   }
 
-  protected onAccept(): void {
-    //this.navCtrl.navigateForward('/requests/request/active', { state: { requestId: this.requestId } });
+  protected onSegmentChange(event: any) {
+    this.activeComponent = event.detail.value;
   }
+
 }
