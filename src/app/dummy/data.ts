@@ -1,5 +1,8 @@
 import { Habilidad } from "../types/dtos/habilidad";
 import { SolicitudRelevante } from "../types/dtos/solicitud-relevante";
+import { SolicitudActiva } from "../types/dtos/solicitud-activa";
+import { RolUsuario } from "../types/dtos/rol-usuario";
+import { EstadoSolicitud } from "../types/dtos/estado-solicitud";
 
 export const SKILLS: Habilidad[] = [
     new Habilidad()
@@ -92,4 +95,39 @@ export const RELEVANT_REQUESTS: SolicitudRelevante[] = [
     .set('requesterLastName', 'Rodriguez')
     .set('requesterConnection', 'Amigo')
     .set('skill', SKILLS[4]),
+]
+
+export const ACTIVE_REQUESTS: SolicitudActiva[] = [
+    new SolicitudActiva()
+    .set('id', 4)
+    .set('title', 'Caño roto')
+    .set('description', 'Tengo un caño roto en mi casa')
+    .set('timeStart', new Date().setMonth(new Date().getMonth() - 1))
+    .set('location', 'Calle 1092')
+    .set('requesterId', 4)
+    .set('requesterName', 'Jose')
+    .set('requesterLastName', 'Gonzalez')
+    .set('providerId', 5)
+    .set('providerName', 'Gaius')
+    .set('providerLastName', 'van Baelsar')
+    .set('requesterProviderConnection', 'Amigo')
+    .set('activeUserRol', RolUsuario.Ayudante)
+    .set('skill', SKILLS[0])
+    .set('status', EstadoSolicitud.Activa),
+    new SolicitudActiva()
+    .set('id', 5)
+    .set('title', 'Cortar pasto')
+    .set('description', 'Necesito cortar el pasto de mi casa')
+    .set('timeStart', new Date().setMonth(new Date().getMonth() - 1))
+    .set('location', 'Calle 1091')
+    .set('requesterId', 5)
+    .set('requesterName', 'Gaius')
+    .set('requesterLastName', 'van Baelsar')
+    .set('providerId', 0)
+    .set('providerName', '')
+    .set('providerLastName', '')
+    .set('requesterProviderConnection', '')
+    .set('activeUserRol', RolUsuario.Solicitante)
+    .set('skill', SKILLS[5])
+    .set('status', EstadoSolicitud.Abierta)
 ]

@@ -39,6 +39,18 @@ export class Solicitud {
         this.status = null;
     }
 
+    public getPassiveUserName(): string {
+        if (this.activeUserRol === RolUsuario.Solicitante) {
+            return this.providerName + ' ' + this.providerLastName;	
+        }
+        else if (this.activeUserRol === RolUsuario.Ayudante) {
+            return this.requesterName + ' ' + this.requesterLastName;
+        }
+        else {
+            return '';
+        }
+    }
+
     public set(property: string, value: any): Solicitud {
         if (this.hasOwnProperty(property)) {
             try {

@@ -42,7 +42,4 @@ export class SkillsPage implements OnInit {
   protected onFilterSkills() {
 
   }
-
-  protected onSkillSelected(skill: Habilidad, event: any) {
-  }
 }

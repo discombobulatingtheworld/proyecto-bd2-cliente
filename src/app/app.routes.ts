@@ -60,6 +60,10 @@ export const routes: Routes = [
             loadComponent: () => import('./pages/requests/create/skills/skills.page').then( m => m.SkillsPage)
           },
           {
+            path: 'complete',
+            loadComponent: () => import('./pages/requests/create/complete/complete.page').then( m => m.CompletePage)
+          },
+          {
             path: '',
             redirectTo: 'details',
             pathMatch: 'full'
@@ -145,110 +149,4 @@ export const routes: Routes = [
     redirectTo: 'authentication',
     pathMatch: 'full'
   },
-  {
-    path: 'complete',
-    loadComponent: () => import('./pages/authentication/registration/complete/complete.page').then( m => m.CompletePage)
-  }
-]
-/*
-export const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'folder/inbox',
-    pathMatch: 'full',
-  },
-  {
-    path: 'folder/:id',
-    loadComponent: () =>
-      import('./pages/folder/folder.page').then((m) => m.FolderPage),
-  },
-  {
-    path: 'login',
-    loadComponent: () => import('./pages/authentication/login/login.page').then( m => m.LoginPage)
-  },
-  {
-    path: 'start',
-    loadComponent: () => import('./pages/authentication/registration/start/start.page').then( m => m.StartPage)
-  },
-  {
-    path: 'skills',
-    loadComponent: () => import('./pages/authentication/registration/skills/skills.page').then( m => m.SkillsPage)
-  },
-  {
-    path: 'requests',
-    loadComponent: () => import('./pages/requests/requests/requests.page').then( m => m.RequestsPage)
-  },
-  {
-    path: 'search',
-    loadComponent: () => import('./pages/requests/requests/search/search.page').then( m => m.SearchPage)
-  },
-  {
-    path: 'active',
-    loadComponent: () => import('./pages/requests/requests/active/active.page').then( m => m.ActivePage)
-  },
-  {
-    path: 'request',
-    loadComponent: () => import('./pages/requests/request/request.page').then( m => m.RequestPage)
-  },
-  {
-    path: 'details',
-    loadComponent: () => import('./pages/requests/request/details/details.page').then( m => m.DetailsPage)
-  },
-  {
-    path: 'messages',
-    loadComponent: () => import('./pages/requests/request/messages/messages.page').then( m => m.MessagesPage)
-  },
-  {
-    path: 'finalize',
-    loadComponent: () => import('./pages/requests/request/finalize/finalize.page').then( m => m.FinalizePage)
-  },
-  {
-    path: 'details',
-    loadComponent: () => import('./pages/requests/create/details/details.page').then( m => m.DetailsPage)
-  },
-  {
-    path: 'skills',
-    loadComponent: () => import('./pages/requests/create/skills/skills.page').then( m => m.SkillsPage)
-  },
-  {
-    path: 'connections',
-    loadComponent: () => import('./pages/connections/connections.page').then( m => m.ConnectionsPage)
-  },
-  {
-    path: 'connections',
-    loadComponent: () => import('./pages/connections/connections/connections.page').then( m => m.ConnectionsPage)
-  },
-  {
-    path: 'pending',
-    loadComponent: () => import('./pages/connections/pending/pending.page').then( m => m.PendingPage)
-  },
-  {
-    path: 'search',
-    loadComponent: () => import('./pages/connections/search/search.page').then( m => m.SearchPage)
-  },
-  {
-    path: 'details',
-    loadComponent: () => import('./pages/profile/details/details.page').then( m => m.DetailsPage)
-  },
-  {
-    path: 'modify',
-    loadComponent: () => import('./pages/profile/modify/modify.page').then( m => m.ModifyPage)
-  },
-  {
-    path: 'authorization',
-    loadComponent: () => import('./pages/profile/password/authorization/authorization.page').then( m => m.AuthorizationPage)
-  },
-  {
-    path: 'change',
-    loadComponent: () => import('./pages/profile/password/change/change.page').then( m => m.ChangePage)
-  },
-  {
-    path: 'list',
-    loadComponent: () => import('./pages/skills/list/list.page').then( m => m.ListPage)
-  },
-  {
-    path: 'modify',
-    loadComponent: () => import('./pages/skills/modify/modify.page').then( m => m.ModifyPage)
-  },
 ];
-*/

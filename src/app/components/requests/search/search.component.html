@@ -5,12 +5,11 @@
 
         <ion-list lines="none">
           <ion-item *ngFor="let request of relevantRequests" (click)="onSelectRequest(request)">
-            <ion-card color="light">
-              <ion-card-header>
-                <ion-card-title>{{request.title}}</ion-card-title>
-              </ion-card-header>
+            <ion-card color="primary">
               <ion-card-content>
-                {{request.skill!.name}}
+                <ion-card-subtitle>{{request.skill!.name}}</ion-card-subtitle>
+                <ion-card-title>{{request.title}}</ion-card-title>
+                <ion-card-subtitle>{{request.requesterName + ' ' + request.requesterLastName}}</ion-card-subtitle>
               </ion-card-content>
             </ion-card>
           </ion-item>

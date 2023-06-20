@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { IonicModule, NavController } from '@ionic/angular';
-import { RELEVANT_REQUESTS } from 'src/app/dummy/data';
-import { SolicitudRelevante } from 'src/app/types/dtos/solicitud-relevante';
+import { ACTIVE_REQUESTS } from 'src/app/dummy/data';
+import { SolicitudActiva } from 'src/app/types/dtos/solicitud-activa';
 
 @Component({
   standalone: true,
@@ -12,8 +12,15 @@ import { SolicitudRelevante } from 'src/app/types/dtos/solicitud-relevante';
   imports: [IonicModule, CommonModule]
 })
 export class ActiveComponent implements OnInit {
+  protected activeRequests: SolicitudActiva[] = ACTIVE_REQUESTS;
+
   constructor(
+    private navCtrl: NavController
   ) { }
 
   ngOnInit() { }
+
+  protected onSelectRequest(request: SolicitudActiva) {
+    //this.navCtrl.navigateForward('/requests/detail');
+  }
 }

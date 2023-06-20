@@ -3,5 +3,14 @@ div.centered-content {
     align-items: center;
     justify-content: center;
     height: 100%;
-    padding: 20px;
+}
+
+ion-item > div {
+    width: 100%;
+    max-width: 500px;
+}
+
+ion-card {
+    width: 100%;
+    max-width: 500px;
 }

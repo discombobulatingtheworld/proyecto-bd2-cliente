@@ -34,5 +34,6 @@ export class RequestsPage implements OnInit {
   }
 
   protected onCreateRequest() {
+    this.navCtrl.navigateForward('/requests/create/details');
   }
 }

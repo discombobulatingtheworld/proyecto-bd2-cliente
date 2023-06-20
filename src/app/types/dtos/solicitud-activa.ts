@@ -1,3 +1,4 @@
+import { EstadoSolicitud } from "./estado-solicitud";
 import { Habilidad } from "./habilidad";
 import { RolUsuario } from "./rol-usuario";
 
@@ -18,6 +19,7 @@ export class SolicitudActiva {
     public requesterProviderConnection: string;
     public activeUserRol: RolUsuario | null;
     public skill: Habilidad | null;
+    public status: EstadoSolicitud | null;
 
     constructor() {
         this.id = 0;
@@ -34,6 +36,19 @@ export class SolicitudActiva {
         this.requesterProviderConnection = '';
         this.activeUserRol = null;
         this.skill = null;
+        this.status = null;
+    }
+
+    public getPassiveUserName(): string {
+        if (this.activeUserRol === RolUsuario.Solicitante) {
+            return this.providerName + ' ' + this.providerLastName;	
+        }
+        else if (this.activeUserRol === RolUsuario.Ayudante) {
+            return this.requesterName + ' ' + this.requesterLastName;
+        }
+        else {
+            return '';
+        }
     }
 
     public set(property: string, value: any): SolicitudActiva {
