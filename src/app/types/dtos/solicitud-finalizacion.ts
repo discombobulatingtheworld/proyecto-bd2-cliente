@@ -1,4 +1,4 @@
-import { EstadoSolicitud } from "./estado-solicitud";
+import { EstadoSolicitud } from "../estado-solicitud";
 
 export class SolicitudFinalizacion {
     [key: string]: any;

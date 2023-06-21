@@ -1,4 +1,4 @@
-import { EstadoSolicitud } from "./estado-solicitud";
+import { EstadoSolicitud } from "../estado-solicitud";
 import { Mensaje } from "./mensaje";
 
 export class Chat {

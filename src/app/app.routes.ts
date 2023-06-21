@@ -163,4 +163,8 @@ export const routes: Routes = [
     redirectTo: 'authentication',
     pathMatch: 'full'
   },
+  {
+    path: 'connections',
+    loadComponent: () => import('./pages/connections/connections/connections.page').then( m => m.ConnectionsPage)
+  },
 ];

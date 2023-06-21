@@ -1,8 +1,8 @@
 import { Habilidad } from "../types/dtos/habilidad";
 import { SolicitudRelevante } from "../types/dtos/solicitud-relevante";
 import { SolicitudActiva } from "../types/dtos/solicitud-activa";
-import { RolUsuario } from "../types/dtos/rol-usuario";
-import { EstadoSolicitud } from "../types/dtos/estado-solicitud";
+import { RolUsuario } from "../types/rol-usuario";
+import { EstadoSolicitud } from "../types/estado-solicitud";
 import { Solicitud } from "../types/dtos/solicitud";
 import { Mensaje } from "../types/dtos/mensaje";
 

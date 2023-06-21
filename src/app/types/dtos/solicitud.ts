@@ -1,6 +1,6 @@
-import { EstadoSolicitud } from "./estado-solicitud";
+import { EstadoSolicitud } from "../estado-solicitud";
 import { Habilidad } from "./habilidad";
-import { RolUsuario } from "./rol-usuario";
+import { RolUsuario } from "../rol-usuario";
 
 export class Solicitud {
     [key: string]: any;

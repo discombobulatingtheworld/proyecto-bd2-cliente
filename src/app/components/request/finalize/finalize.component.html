@@ -1,3 +1,30 @@
-<p>
-  finalize works!
-</p>
+<div class="centered-content">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+
+        <form [formGroup]="requestFinalizationForm" #requestFinalizationEntryForm="ngForm" (ngSubmit)="onSubmit()">
+
+          <ion-select label="Resultado" label-placement="stacked" fill="outline" formControlName="status"
+            id="inputStatus">
+            <ion-select-option *ngFor="let estado of solicitudFinalizacionEstados"
+              [value]="estado">{{solicitudFinalizacionEstadoMapping[estado]}}</ion-select-option>
+          </ion-select>
+          <br>
+          <ion-textarea label="Comentario" label-placement="stacked" type="text" fill="outline"
+            formControlName="opinion" id="inputOpinion" placeholder="Comentario" rows="8"></ion-textarea>
+          <br>
+          <br>
+          <ion-button type="submit" [disabled]="!requestFinalizationEntryForm.form.valid" expand="block">
+            <ion-icon slot="start" name="checkmark"></ion-icon>
+            Finalizar
+          </ion-button>
+
+
+
+        </form>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
