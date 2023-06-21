@@ -13,6 +13,7 @@ import { Mensaje } from 'src/app/types/dtos/mensaje';
 })
 export class MessageComponent  implements OnInit {
   @Input() public message!: Mensaje;
+  protected userId: number = 5;
 
   constructor() { }
 

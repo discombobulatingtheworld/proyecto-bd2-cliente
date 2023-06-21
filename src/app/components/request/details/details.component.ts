@@ -9,7 +9,8 @@ import { Solicitud } from 'src/app/types/dtos/solicitud';
   selector: 'app-request-details',
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss'],
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule],
+  host: { style: 'height: 100%;' }
 })
 export class DetailsComponent  implements OnInit {
   @Input() public request!: Solicitud;

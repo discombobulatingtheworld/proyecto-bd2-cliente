@@ -11,7 +11,8 @@ import { Solicitud } from 'src/app/types/dtos/solicitud';
   selector: 'app-request-finalize',
   templateUrl: './finalize.component.html',
   styleUrls: ['./finalize.component.scss'],
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule],
+  host: { style: 'height: 100%;' }
 })
 export class FinalizeComponent  implements OnInit {
   @Input() public request!: Solicitud;

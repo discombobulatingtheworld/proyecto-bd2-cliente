@@ -12,11 +12,14 @@ import { MessageComponent } from './message/message.component';
   selector: 'app-request-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
-  imports: [IonicModule, CommonModule, FormsModule, MessageComponent]
+  imports: [IonicModule, CommonModule, FormsModule, MessageComponent],
+  host: { style: 'height: 100%;' }
+
 })
 export class ChatComponent  implements OnInit {
   @Input() public request!: Solicitud;
   protected messages: Mensaje[] = [];
+  protected newMessage: string = '';
 
   constructor() { }
 
@@ -24,4 +27,7 @@ export class ChatComponent  implements OnInit {
     this.messages = MESSAGES.filter(m => m.requestId === this.request.id);
   }
 
+  protected onSendMessage(): void {
+
+  }
 }
