@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, MenuController, NavController } from '@ionic/angular';
+import { Habilidad } from 'src/app/types/dtos/habilidad';
+import { USER_SKILLS } from 'src/app/dummy/data';
 
 @Component({
   selector: 'app-list',
@@ -11,10 +13,27 @@ import { IonicModule } from '@ionic/angular';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class ListPage implements OnInit {
+  protected title: string = 'Habilidades';
+  protected skills: Habilidad[] = [];
 
-  constructor() { }
+  constructor(
+    private navCtrl: NavController,
+    private menuCtrl: MenuController,
+  ) { }
 
   ngOnInit() {
+    this.skills = USER_SKILLS;
   }
 
+  ionViewWillEnter() {
+    this.menuCtrl.enable(true);
+  }
+
+  protected onEdit() {
+    this.navCtrl.navigateForward('skills/modify');
+  }
+
+  protected onDelete(skill: Habilidad) {
+    // TODO: Implementar borrado de habilidad
+  }
 }

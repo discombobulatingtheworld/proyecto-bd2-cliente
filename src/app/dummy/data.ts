@@ -5,6 +5,8 @@ import { RolUsuario } from "../types/rol-usuario";
 import { EstadoSolicitud } from "../types/estado-solicitud";
 import { Solicitud } from "../types/dtos/solicitud";
 import { Mensaje } from "../types/dtos/mensaje";
+import { Conexion } from "../types/dtos/conexion";
+import { Usuario } from "../types/dtos/usuario";
 
 export const SKILLS: Habilidad[] = [
     new Habilidad()
@@ -61,6 +63,27 @@ export const SKILLS: Habilidad[] = [
     .set('description', 'Reparacion de computadoras')
     .set('categoryId', 2)
     .set('categoryName', 'Tecnologia'),
+]
+
+export const USER_SKILLS: Habilidad[] = [
+    new Habilidad()
+    .set('id', 3)
+    .set('name', 'Electricidad')
+    .set('description', 'Reparacion de instalaciones electricas')
+    .set('categoryId', 1)
+    .set('categoryName', 'Hogar'),
+    new Habilidad()
+    .set('id', 7)
+    .set('name', 'Limpieza')
+    .set('description', 'Limpieza de casas')
+    .set('categoryId', 1)
+    .set('categoryName', 'Hogar'),
+    new Habilidad()
+    .set('id', 9)
+    .set('name', 'Soporte PC')
+    .set('description', 'Reparacion de computadoras')
+    .set('categoryId', 2)
+    .set('categoryName', 'Tecnologia')
 ]
 
 export const RELEVANT_REQUESTS: SolicitudRelevante[] = [
@@ -236,4 +259,65 @@ export const MESSAGES: Mensaje[] = [
     .set('senderLastName', 'van Baelsar')
     .set('contents', 'Hola, no hay problema, cuando queres que vaya?')
     .set('deleted', false),
+]
+
+export const CONNECTIONS: Conexion[] = [
+    new Conexion()
+    .set('userId', 4)
+    .set('email', 'jg@gmail.com')
+    .set('name', 'Jose')
+    .set('lastName', 'Gonzales')
+    .set('nick', 'jgonzales'),
+    new Conexion()
+    .set('userId', 1)
+    .set('email', 'email@email.com')
+    .set('name', 'Juan')
+    .set('lastName', 'Perez')
+    .set('nick', 'jperez')
+]
+
+export const PENDING_CONNECTIONS: Conexion[] = [
+    new Conexion()
+    .set('userId', 2)
+    .set('email', 'asd@asd.ce')
+    .set('name', 'Maria')
+    .set('lastName', 'Gomez')
+    .set('nick', 'mgomez'),
+    new Conexion()
+    .set('userId', 3)
+    .set('email', '')
+    .set('name', 'Pedro')
+    .set('lastName', 'Rodriguez')
+    .set('nick', 'prodriguez')
+]
+
+export const CONNECTION_SEARCH_RESULTS: Conexion[] = [
+    new Conexion()
+    .set('userId', 2)
+    .set('email', 'asd@asd.ce')
+    .set('name', 'Maria')
+    .set('lastName', 'Gomez')
+    .set('nick', 'mgomez'),
+    new Conexion()
+    .set('userId', 3)
+    .set('email', '')
+    .set('name', 'Pedro')
+    .set('lastName', 'Rodriguez')
+    .set('nick', 'prodriguez'),
+    new Conexion()
+    .set('userId', 6)
+    .set('email', '')
+    .set('name', 'Alphinaud')
+    .set('lastName', 'Leveilleur')
+    .set('nick', 'aleveilleur')
+]
+
+export const PROFILES: Usuario[] = [
+    new Usuario()
+    .set('id', 5)
+    .set('email', 'gaius@gmail.com')
+    .set('name', 'Gaius')
+    .set('lastName', 'van Baelsar')
+    .set('nick', 'gvanbaelsar')
+    .set('birthDate', new Date(1980, 1, 1))
 ]

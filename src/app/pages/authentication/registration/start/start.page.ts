@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
-import { Validators as CustomValidators } from 'src/app/helpers/validators';
+import { FormValidators as CustomValidators } from 'src/app/helpers/validators';
 
 @Component({
   selector: 'app-start',

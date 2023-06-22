@@ -1,13 +1,26 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>modify</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="#" (click)="onBack()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="end" class="padding-right-10">
+      <ion-button (click)="onFilter()">
+        <ion-icon slot="icon-only" name="filter"></ion-icon>
+      </ion-button>
+      <ion-button (click)="onSave()">
+        <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">modify</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-list>
+    <ion-item *ngFor="let skill of availableSkills">
+      <ion-label>{{skill[0].name}}</ion-label>
+      <ion-checkbox slot="end" [(ngModel)]="skill[1]" aria-label="Checkbox"> </ion-checkbox>
+    </ion-item>
+  </ion-list>
+
 </ion-content>

@@ -1,13 +1,38 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>change</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="#" (click)="onBack()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="end" class="padding-right-10">
+      <ion-button (click)="onPasswordChange()">
+        <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">change</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <br>
+
+  <div class="centered-content">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+
+          <form [formGroup]="passwordChangeForm" #passwordChangeEntryForm="ngForm">
+            <ion-input label="Contraseña Nueva" label-placement="stacked" type="password" fill="outline"
+              formControlName="newPassword" id="inputNewPassword" placeholder="Contraseña Nueva"
+              errorText="Password length must be at least 8 characters"></ion-input>
+            <br>
+            <ion-input label="Confirmar Contraseña Nueva" label-placement="stacked" type="password" fill="outline"
+              formControlName="confirmNewPassword" id="inputConfirmNewPassword" placeholder="Confirmar Contraseña Nueva"
+              errorText="Passwords don't match"></ion-input>
+          </form>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
 </ion-content>

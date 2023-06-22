@@ -1,3 +1,10 @@
-<p>
-  pending works!
-</p>
+<ion-list [lines]="false">
+  <ion-item *ngFor="let connection of pendingConnections">
+    <ion-label>{{connection.name + ' ' + connection.lastName}}</ion-label>
+    <ion-buttons slot="end" class="padding-right-10">
+      <ion-button (click)="onAcceptConnection(connection)">
+        <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-item>
+</ion-list>

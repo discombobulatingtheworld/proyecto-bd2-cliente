@@ -1,3 +1,10 @@
-<p>
-  active works!
-</p>
+<ion-list [lines]="false">
+  <ion-item *ngFor="let connection of connections">
+    <ion-label>{{connection.name + ' ' + connection.lastName}}</ion-label>
+    <ion-buttons slot="end" class="padding-right-10">
+      <ion-button (click)="onRemoveConnection(connection)">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-item>
+</ion-list>

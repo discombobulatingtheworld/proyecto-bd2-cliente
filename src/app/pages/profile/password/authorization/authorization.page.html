@@ -1,13 +1,42 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>authorization</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="#" (click)="onBack()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="end" class="padding-right-10">
+      <ion-button (click)="onAuthorize()">
+        <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">authorization</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <br>
+
+  <div class="centered-content">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+
+          <span class="text-message">
+            Se le enviara a su correo electrónico un código de autorización. Por favor ingresarlo en la siguiente
+            entrada para poder continuar.
+          </span>
+
+          <br>
+          <br>
+
+          <form [formGroup]="authorizePasswordModificationForm" #authorizePasswordModificationEntryForm="ngForm">
+            <ion-input label="Código de Autorización" label-placement="stacked" type="text" fill="outline"
+              formControlName="authorizationCode" id="inputAuthorizationCode" placeholder="XXX-XXX"
+              errorText="Invalid code" (ionChange)="onAuthorizationCodeChange()"></ion-input>
+          </form>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
 </ion-content>

@@ -1,13 +1,45 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>modify</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="#" (click)="onBack()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="end" class="padding-right-10">
+      <ion-button (click)="onSave()">
+        <ion-icon slot="icon-only" name="pencil"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">modify</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <br>
+
+  <div class="centered-content">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+
+          <form [formGroup]="profileModificationForm" #profileModificationEntryForm="ngForm">
+            <ion-input label="Nombre" label-placement="stacked" type="text" fill="outline" formControlName="name"
+              id="inputName" placeholder="Nombre" errorText="El nombre es requerido"></ion-input>
+            <br>
+            <ion-input label="Apellido" label-placement="stacked" type="text" fill="outline" formControlName="lastName"
+              id="inputLastName" placeholder="Apellido" errorText="El apellido es requerido"></ion-input>
+            <br>
+            <ion-input label="Email" label-placement="stacked" type="email" fill="outline" formControlName="email"
+              id="inputEmail" placeholder="Email" [errorText]="profileModificationEntryForm.control.get('email')!.errors?.['email'] ? 'Email inválido' : 'El email es requerido'"></ion-input>
+            <br>
+            <ion-input label="Usuario" label-placement="stacked" type="text" fill="outline" formControlName="nick"
+              id="inputNick" placeholder="Usuario" errorText="El usuario es requerido"></ion-input>
+            <br>
+            <ion-input label="Nacimiento" label-placement="stacked" type="text" fill="outline"
+              formControlName="birthDate" id="inputBirthDate" placeholder="Nacimiento" [errorText]="profileModificationEntryForm.control.get('birthDate')!.errors?.['required'] ? 'La fecha de nacimiento es requerida' : 'La fecha de nacimiento es inválida'"></ion-input>
+          </form>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
 </ion-content>

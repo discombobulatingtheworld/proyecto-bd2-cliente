@@ -16,25 +16,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-buttons slot="start" (click)="onBack()">
-        <ion-back-button default-href="#"></ion-back-button>
-      </ion-buttons>
-      <ion-title size="large">Habilidades</ion-title>
-      <ion-buttons slot="primary" class="padding-right-10">
-        <ion-button (click)="onFilterSkills()">
-          <ion-icon slot="icon-only" name="filter"></ion-icon>
-        </ion-button>
-        <ion-button (click)="onNext()">
-          <ion-icon slot="icon-only" name="checkmark"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
-
-  <br>
-
   <ion-list>
     <ion-item *ngFor="let skill of availableSkills">
       <ion-label>{{skill[0].name}}</ion-label>

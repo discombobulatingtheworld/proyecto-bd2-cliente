@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-buttons slot="start" (click)="onBack()">
-      <ion-back-button default-href="#"></ion-back-button>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="#" (click)="onBack()"></ion-back-button>
     </ion-buttons>
     <ion-title>Crear Solicitud</ion-title>
     <ion-buttons slot="primary" class="padding-right-10">
@@ -13,20 +13,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-buttons slot="start" (click)="onBack()">
-        <ion-back-button default-href="#"></ion-back-button>
-      </ion-buttons>
-      <ion-title size="large">Crear Solicitud</ion-title>
-      <ion-buttons slot="primary" class="padding-right-10">
-        <ion-button (click)="onNext()">
-          <ion-icon slot="icon-only" name="checkmark"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
-
   <br>
 
   <div class="centered-content">

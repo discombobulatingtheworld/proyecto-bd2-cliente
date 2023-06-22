@@ -1,13 +1,45 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>details</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="end" class="padding-right-10">
+      <ion-button (click)="onEdit()">
+        <ion-icon slot="icon-only" name="pencil"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">details</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="centered-content">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <div *ngIf="profile">
+            <ion-input label="Nombre" placeholder="Nombre" class="ion-text-end" [readonly]="true" type="text"
+              [(ngModel)]="profile.name"></ion-input>
+            <ion-input label="Apellido" placeholder="Apellido" class="ion-text-end" [readonly]="true" type="text"
+              [(ngModel)]="profile.lastName"></ion-input>
+            <ion-input label="Usuario" placeholder="Usuario" class="ion-text-end" [readonly]="true" type="text"
+              [(ngModel)]="profile.nick"></ion-input>
+            <ion-input label="Nacimiento" placeholder="Nacimiento" class="ion-text-end" [readonly]="true" type="text"
+              [(ngModel)]="profile.birthDateStr"></ion-input>
+            <ion-input label="Email" placeholder="Email" class="ion-text-end" [readonly]="true" type="email"
+              [(ngModel)]="profile.email"></ion-input>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <ion-fab slot="fixed" vertical="bottom">
+    <ion-button shape="round" expand="block" fill="outline" type="button" (click)="onModifyPassword()">
+      <ion-label>Modificar Contraseña</ion-label>
+    </ion-button>
+    <ion-button shape="round" expand="block" fill="outline" type="button" (click)="onLogout()">
+      <ion-label>Cerrar Sesión</ion-label>
+    </ion-button>
+  </ion-fab>
 </ion-content>

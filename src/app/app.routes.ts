@@ -100,7 +100,7 @@ export const routes: Routes = [
       },
       {
         path: '',
-        loadComponent: () => import('./pages/connections/connections.page').then( m => m.ConnectionsPage)
+        loadComponent: () => import('./pages/connections/connections/connections.page').then( m => m.ConnectionsPage)
       },
     ]
   },
@@ -162,9 +162,5 @@ export const routes: Routes = [
     path: '',
     redirectTo: 'authentication',
     pathMatch: 'full'
-  },
-  {
-    path: 'connections',
-    loadComponent: () => import('./pages/connections/connections/connections.page').then( m => m.ConnectionsPage)
   },
 ];

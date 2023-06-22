@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, MenuController, NavController } from '@ionic/angular';
+import { Usuario } from 'src/app/types/dtos/usuario';
+import { PROFILES } from 'src/app/dummy/data';
 
 @Component({
   selector: 'app-details',
@@ -11,10 +13,31 @@ import { IonicModule } from '@ionic/angular';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class DetailsPage implements OnInit {
+  protected title: string = 'Perfil';
+  protected profile?: Usuario;
 
-  constructor() { }
+  constructor(
+    private navCtrl: NavController,
+    private menuCtrl: MenuController
+  ) { }
 
   ngOnInit() {
+    this.profile = PROFILES[0];
   }
 
+  ionViewWillEnter() {
+    this.menuCtrl.enable(true);
+  }
+
+  protected onEdit() {
+    this.navCtrl.navigateForward('profile/modify');
+  }
+
+  protected onLogout() {
+    this.navCtrl.navigateRoot('');
+  }
+
+  protected onModifyPassword() {
+    this.navCtrl.navigateForward('profile/password');
+  }
 }

@@ -1,13 +1,35 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>search</ion-title>
+    <ion-buttons slot="start" (click)="onBack()">
+      <ion-back-button default-href="#"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">search</ion-title>
+      <ion-buttons slot="start" (click)="onBack()">
+        <ion-back-button default-href="#"></ion-back-button>
+      </ion-buttons>
+      <ion-title>{{ title }}</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <br>
+
+  <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="onSearch($event)" animated></ion-searchbar>
+
+  <ion-list [lines]="false">
+    <ion-item *ngFor="let connection of searchResults">
+      <ion-label>{{connection.name + ' ' + connection.lastName}}</ion-label>
+      <ion-buttons slot="end" class="padding-right-10">
+        <ion-button (click)="onRequestConnection(connection)">
+          <ion-icon slot="icon-only" name="add"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+
 </ion-content>

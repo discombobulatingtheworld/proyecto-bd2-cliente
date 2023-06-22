@@ -1,3 +1,5 @@
+import { formatDate } from "@angular/common";
+
 export class Usuario {
     [key: string]: any;
 
@@ -16,6 +18,15 @@ export class Usuario {
         this.lastName = '';
         this.birthDate = new Date();
     }
+
+    public get birthDateStr(): string {
+        return formatDate(this.birthDate, 'dd/MM/yyyy', 'en-US');
+    }
+
+    public set birthDateStr(value: string) {
+        this.birthDate = new Date(value);
+    }
+
 
     public set(property: string, value: any): Usuario {
         if (this.hasOwnProperty(property)) {
