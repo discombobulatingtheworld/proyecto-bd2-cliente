@@ -27,7 +27,6 @@ export class ModifyPage implements OnInit {
     lastName: new FormControl<string>('', Validators.required),
     nick: new FormControl<string>('', Validators.required),
     email: new FormControl<string>('', [Validators.required, Validators.email]),
-    birthDate: new FormControl<string>('', [Validators.required, CustomControlValidators.validDateStr]),
   });
 
   constructor(
@@ -42,8 +41,7 @@ export class ModifyPage implements OnInit {
       name: this.profile.name,
       lastName: this.profile.lastName,
       nick: this.profile.nick,
-      email: this.profile.email,
-      birthDate: formatDate(this.profile.birthDate, 'dd/MM/yyyy', 'en-US')
+      email: this.profile.email
     });
   }
 

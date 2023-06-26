@@ -319,5 +319,4 @@ export const PROFILES: Usuario[] = [
     .set('name', 'Gaius')
     .set('lastName', 'van Baelsar')
     .set('nick', 'gvanbaelsar')
-    .set('birthDate', new Date(1980, 1, 1))
 ]

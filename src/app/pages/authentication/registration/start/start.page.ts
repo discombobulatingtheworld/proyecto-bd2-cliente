@@ -24,7 +24,6 @@ export class StartPage implements OnInit {
     passwordConfirmation: new FormControl<string>('', Validators.required),
     name: new FormControl<string>('', Validators.required),
     lastName: new FormControl<string>('', Validators.required),
-    birthDate: new FormControl<Date>(new Date(), Validators.required),
   },{
     validators: CustomValidators.ConfirmedValidator('password', 'passwordConfirmation')
   });

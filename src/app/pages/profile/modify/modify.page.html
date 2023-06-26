@@ -32,9 +32,6 @@
             <br>
             <ion-input label="Usuario" label-placement="stacked" type="text" fill="outline" formControlName="nick"
               id="inputNick" placeholder="Usuario" errorText="El usuario es requerido"></ion-input>
-            <br>
-            <ion-input label="Nacimiento" label-placement="stacked" type="text" fill="outline"
-              formControlName="birthDate" id="inputBirthDate" placeholder="Nacimiento" [errorText]="profileModificationEntryForm.control.get('birthDate')!.errors?.['required'] ? 'La fecha de nacimiento es requerida' : 'La fecha de nacimiento es inválida'"></ion-input>
           </form>
 
         </ion-col>
