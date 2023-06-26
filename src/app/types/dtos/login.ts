@@ -1,13 +1,15 @@
-export class PasswordCambioSolicitud {
+export class Login {
     [key: string]: any;
 
-    public userId: number;
+    public email: string;
+    public password: string;
 
     constructor() {
-        this.userId = 0;
+        this.email = '';
+        this.password = '';
     }
 
-    public set(property: string, value: any): PasswordCambioSolicitud {
+    public set(property: string, value: any): Login {
         if (this.hasOwnProperty(property)) {
             try {
                 let type = typeof this[property];
@@ -24,8 +26,8 @@ export class PasswordCambioSolicitud {
         }
     }
 
-    static fromJson(json: any): PasswordCambioSolicitud {
-        let result = new PasswordCambioSolicitud();
+    static fromJson(json: any): Login {
+        let result = new Login();
         for (let key in json) {
             if (json.hasOwnProperty(key)) {
                 result.set(key, json[key]);
@@ -44,7 +46,8 @@ export class PasswordCambioSolicitud {
         return result;
     }
 
-    public clone(): PasswordCambioSolicitud {
-        return PasswordCambioSolicitud.fromJson(this.toJson());
+    public clone(): Login {
+        return Login.fromJson(this.toJson());
     }
+
 }

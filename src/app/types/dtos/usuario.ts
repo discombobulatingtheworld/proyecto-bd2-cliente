@@ -8,7 +8,6 @@ export class Usuario {
     public nick: string;
     public name: string;
     public lastName: string;
-    public birthDate: Date;
 
     constructor() {
         this.id = 0;
@@ -16,17 +15,7 @@ export class Usuario {
         this.nick = '';
         this.name = '';
         this.lastName = '';
-        this.birthDate = new Date();
     }
-
-    public get birthDateStr(): string {
-        return formatDate(this.birthDate, 'dd/MM/yyyy', 'en-US');
-    }
-
-    public set birthDateStr(value: string) {
-        this.birthDate = new Date(value);
-    }
-
 
     public set(property: string, value: any): Usuario {
         if (this.hasOwnProperty(property)) {
