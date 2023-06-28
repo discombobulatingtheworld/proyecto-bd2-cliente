@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from  '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 @Component({
@@ -9,8 +10,10 @@ import { IonicModule } from '@ionic/angular';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [IonicModule, RouterLink, RouterLinkActive, CommonModule, HttpClientModule],
+  imports: [HttpClientModule, IonicModule, RouterLink, RouterLinkActive, CommonModule],
+  // providers: [HttpClientModule]
 })
+
 export class AppComponent {
   public appPages = [
     { title: 'Solicitudes', url: '/requests/requests', icon: 'construct' },
@@ -19,5 +22,5 @@ export class AppComponent {
     { title: 'Habilidades', url: '/skills/list', icon: 'medal' },
   ];
   public labels = [/*'Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'*/];
-  constructor() {}
+  constructor() { }
 }

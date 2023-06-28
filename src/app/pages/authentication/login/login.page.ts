@@ -29,7 +29,7 @@ export class LoginPage implements OnInit {
     private navCtrl: NavController,
     private menuCtrl: MenuController,
     private LoginService: LoginService,
-    private userService: UsuariosService,
+    
   ) { }
 
   ngOnInit() {
@@ -56,17 +56,11 @@ export class LoginPage implements OnInit {
     }
     const email: String = this.loginForm.value.email;
     const password: String = this.loginForm.value.password;
-    const observable: Observable<any> = this.LoginService.auth(email, password);
-    observable.subscribe(response => {
-      if (response.message) {
-        alert(response.message);
-      } else {
-        const accessToken = response.accessToken;
-        this.userService.setUserToken(accessToken);
-
-        this.navCtrl.navigateRoot('/requests/requests');
-      }
-    });
+    try {
+      this.LoginService.auth(email, password);
+    } catch (err) {
+      alert('Email o contraseña incorrectos.')
+    }
   }
 
   protected setAlertOpen(isOpen: boolean) {

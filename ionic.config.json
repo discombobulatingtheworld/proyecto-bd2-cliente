@@ -1,7 +1,5 @@
 {
-  "name": "AyudaYa",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular-standalone"
+  "name": "xd",
+  "integrations": {},
+  "type": "angular"
 }

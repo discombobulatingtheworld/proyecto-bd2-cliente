@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './guard/auth.guard';
 
 export const routes: Routes = [
   {
@@ -6,22 +7,22 @@ export const routes: Routes = [
     children: [
       {
         path: 'login',
-        loadComponent: () => import('./pages/authentication/login/login.page').then( m => m.LoginPage)
+        loadComponent: () => import('./pages/authentication/login/login.page').then(m => m.LoginPage)
       },
       {
         path: 'registration',
         children: [
           {
             path: 'start',
-            loadComponent: () => import('./pages/authentication/registration/start/start.page').then( m => m.StartPage)
+            loadComponent: () => import('./pages/authentication/registration/start/start.page').then(m => m.StartPage)
           },
           {
             path: 'skills',
-            loadComponent: () => import('./pages/authentication/registration/skills/skills.page').then( m => m.SkillsPage)
+            loadComponent: () => import('./pages/authentication/registration/skills/skills.page').then(m => m.SkillsPage)
           },
           {
             path: 'complete',
-            loadComponent: () => import('./pages/authentication/registration/complete/complete.page').then( m => m.CompletePage)
+            loadComponent: () => import('./pages/authentication/registration/complete/complete.page').then(m => m.CompletePage)
           },
           {
             path: '',
@@ -38,22 +39,23 @@ export const routes: Routes = [
     ]
   },
   {
+    canActivate: [AuthGuard],
     path: 'requests',
     children: [
       {
         path: 'requests',
-        loadComponent: () => import('./pages/requests/requests/requests.page').then( m => m.RequestsPage)
+        loadComponent: () => import('./pages/requests/requests/requests.page').then(m => m.RequestsPage)
       },
       {
         path: 'request',
         children: [
           {
             path: 'details',
-            loadComponent: () => import('./pages/requests/request/details/details.page').then( m => m.DetailsPage)
+            loadComponent: () => import('./pages/requests/request/details/details.page').then(m => m.DetailsPage)
           },
           {
             path: 'active',
-            loadComponent: () => import('./pages/requests/request/active/active.page').then( m => m.ActivePage)
+            loadComponent: () => import('./pages/requests/request/active/active.page').then(m => m.ActivePage)
           },
           {
             path: '',
@@ -63,19 +65,20 @@ export const routes: Routes = [
         ]
       },
       {
+        canActivate: [AuthGuard],
         path: 'create',
         children: [
           {
             path: 'details',
-            loadComponent: () => import('./pages/requests/create/details/details.page').then( m => m.DetailsPage)
+            loadComponent: () => import('./pages/requests/create/details/details.page').then(m => m.DetailsPage)
           },
           {
             path: 'skills',
-            loadComponent: () => import('./pages/requests/create/skills/skills.page').then( m => m.SkillsPage)
+            loadComponent: () => import('./pages/requests/create/skills/skills.page').then(m => m.SkillsPage)
           },
           {
             path: 'complete',
-            loadComponent: () => import('./pages/requests/create/complete/complete.page').then( m => m.CompletePage)
+            loadComponent: () => import('./pages/requests/create/complete/complete.page').then(m => m.CompletePage)
           },
           {
             path: '',
@@ -92,39 +95,41 @@ export const routes: Routes = [
     ]
   },
   {
+    canActivate: [AuthGuard],
     path: 'connections',
     children: [
       {
         path: 'search',
-        loadComponent: () => import('./pages/connections/search/search.page').then( m => m.SearchPage)
+        loadComponent: () => import('./pages/connections/search/search.page').then(m => m.SearchPage)
       },
       {
         path: '',
-        loadComponent: () => import('./pages/connections/connections/connections.page').then( m => m.ConnectionsPage)
+        loadComponent: () => import('./pages/connections/connections/connections.page').then(m => m.ConnectionsPage)
       },
     ]
   },
   {
+    canActivate: [AuthGuard],
     path: 'profile',
     children: [
       {
         path: 'details',
-        loadComponent: () => import('./pages/profile/details/details.page').then( m => m.DetailsPage)
+        loadComponent: () => import('./pages/profile/details/details.page').then(m => m.DetailsPage)
       },
       {
         path: 'modify',
-        loadComponent: () => import('./pages/profile/modify/modify.page').then( m => m.ModifyPage)
+        loadComponent: () => import('./pages/profile/modify/modify.page').then(m => m.ModifyPage)
       },
       {
         path: 'password',
         children: [
           {
             path: 'authorization',
-            loadComponent: () => import('./pages/profile/password/authorization/authorization.page').then( m => m.AuthorizationPage)
+            loadComponent: () => import('./pages/profile/password/authorization/authorization.page').then(m => m.AuthorizationPage)
           },
           {
             path: 'change',
-            loadComponent: () => import('./pages/profile/password/change/change.page').then( m => m.ChangePage)
+            loadComponent: () => import('./pages/profile/password/change/change.page').then(m => m.ChangePage)
           },
           {
             path: '',
@@ -141,15 +146,16 @@ export const routes: Routes = [
     ]
   },
   {
+    canActivate: [AuthGuard],
     path: 'skills',
     children: [
       {
         path: 'list',
-        loadComponent: () => import('./pages/skills/list/list.page').then( m => m.ListPage)
+        loadComponent: () => import('./pages/skills/list/list.page').then(m => m.ListPage)
       },
       {
         path: 'modify',
-        loadComponent: () => import('./pages/skills/modify/modify.page').then( m => m.ModifyPage)
+        loadComponent: () => import('./pages/skills/modify/modify.page').then(m => m.ModifyPage)
       },
       {
         path: '',
