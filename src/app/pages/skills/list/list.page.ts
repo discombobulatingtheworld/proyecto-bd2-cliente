@@ -28,6 +28,7 @@ export class ListPage implements OnInit {
     this.getHabilidadesUsuario();
   }
 
+  // getHabilidadesUsuario hardcodeado, falta obtener el id del usuario en sesion 
   getHabilidadesUsuario(): void {
     this.usuarioService.getHabilidadesUsuario(1).subscribe((habilidades) => {
       this.skills = habilidades;

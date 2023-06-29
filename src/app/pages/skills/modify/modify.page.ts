@@ -31,8 +31,9 @@ export class ModifyPage implements OnInit {
   ngOnInit() {
     this.getHabilidades();
     this.getHabilidadesUsuario();
+
+    // el obtener las habilidades disponibles no funciona con las habilidades traidas de bd
     this.availableSkills = this.allSkills.map(s => [s, this.mySkills.filter(us => us.id === s.id).length > 0]);
-    console.log(this.availableSkills);
   }
 
   getHabilidades(): void {
