@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { Habilidad } from 'src/app/types/dtos/habilidad';
 import { SKILLS, USER_SKILLS } from 'src/app/dummy/data';
+import { HabilidadesService } from 'src/app/services/Habilidades/habilidades.service';
+import { UsuariosService } from 'src/app/services/rest-api/usuarios.service';
 
 @Component({
   selector: 'app-modify',
@@ -13,16 +15,36 @@ import { SKILLS, USER_SKILLS } from 'src/app/dummy/data';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class ModifyPage implements OnInit {
-  protected title: string = 'Editar Habilidades';
 
+  protected title: string = 'Editar Habilidades';
+  protected allSkills: Habilidad[] = [];
+  protected mySkills: Habilidad[] = [];
   protected availableSkills: [Habilidad, boolean][] = [];
+
   constructor(
     private navCtrl: NavController,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private habilidadService: HabilidadesService,
+    private usuarioService: UsuariosService
   ) { }
 
   ngOnInit() {
-    this.availableSkills = SKILLS.map(s => [s, USER_SKILLS.filter(us => us.id === s.id).length > 0]);
+    this.getHabilidades();
+    this.getHabilidadesUsuario();
+    this.availableSkills = this.allSkills.map(s => [s, this.mySkills.filter(us => us.id === s.id).length > 0]);
+    console.log(this.availableSkills);
+  }
+
+  getHabilidades(): void {
+    this.habilidadService.getHabilidades().subscribe((habilidades) => {
+      this.allSkills = habilidades;
+    })
+  }
+
+  getHabilidadesUsuario(): void {
+    this.usuarioService.getHabilidadesUsuario(1).subscribe((habilidades) => {
+      this.mySkills = habilidades;
+    })
   }
 
   ionViewWillEnter() {
