@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { Habilidad } from 'src/app/types/dtos/habilidad';
 import { USER_SKILLS } from 'src/app/dummy/data';
+import { HabilidadesService } from 'src/app/services/Habilidades/habilidades.service';
 
 @Component({
   selector: 'app-list',
@@ -19,10 +20,18 @@ export class ListPage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private menuCtrl: MenuController,
+    private habilidadService: HabilidadesService
   ) { }
 
   ngOnInit() {
-    this.skills = USER_SKILLS;
+    //this.skills = USER_SKILLS;
+    this.getHabilidades();
+  }
+
+  getHabilidades(): void {
+    this.habilidadService.getHabilidades().subscribe((habilidades) => {
+      this.skills = habilidades;
+    })
   }
 
   ionViewWillEnter() {
