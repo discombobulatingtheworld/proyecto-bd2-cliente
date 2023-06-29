@@ -17,3 +17,5 @@ export class HabilidadesService {
     return this.http.get<Habilidad[]>('http://localhost:3001/api/habilidades');
   }
 }
+
+
