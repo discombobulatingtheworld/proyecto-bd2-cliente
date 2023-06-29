@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { Habilidad } from 'src/app/types/dtos/habilidad';
 import { USER_SKILLS } from 'src/app/dummy/data';
-import { HabilidadesService } from 'src/app/services/Habilidades/habilidades.service';
+import { UsuariosService } from 'src/app/services/rest-api/usuarios.service';
 
 @Component({
   selector: 'app-list',
@@ -20,16 +20,16 @@ export class ListPage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private menuCtrl: MenuController,
-    private habilidadService: HabilidadesService
+    private usuarioService: UsuariosService
   ) { }
 
   ngOnInit() {
     //this.skills = USER_SKILLS;
-    this.getHabilidades();
+    this.getHabilidadesUsuario();
   }
 
-  getHabilidades(): void {
-    this.habilidadService.getHabilidades().subscribe((habilidades) => {
+  getHabilidadesUsuario(): void {
+    this.usuarioService.getHabilidadesUsuario(1).subscribe((habilidades) => {
       this.skills = habilidades;
     })
   }
