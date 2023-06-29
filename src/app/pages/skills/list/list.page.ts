@@ -16,6 +16,7 @@ import { UsuariosService } from 'src/app/services/rest-api/usuarios.service';
 export class ListPage implements OnInit {
   protected title: string = 'Habilidades';
   protected skills: Habilidad[] = [];
+  protected userId: number = 0;
 
   constructor(
     private navCtrl: NavController,
@@ -25,12 +26,17 @@ export class ListPage implements OnInit {
 
   ngOnInit() {
     //this.skills = USER_SKILLS;
+    this.getUserId();
     this.getHabilidadesUsuario();
+  }
+
+  getUserId(): void {
+    this.userId = this.usuarioService.getUserIdByToken();
   }
 
   // getHabilidadesUsuario hardcodeado, falta obtener el id del usuario en sesion 
   getHabilidadesUsuario(): void {
-    this.usuarioService.getHabilidadesUsuario(1).subscribe((habilidades) => {
+    this.usuarioService.getHabilidadesUsuario(this.userId).subscribe((habilidades) => {
       this.skills = habilidades;
     })
   }
