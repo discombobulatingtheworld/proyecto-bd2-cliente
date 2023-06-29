@@ -39,7 +39,9 @@ export class ModifyPage implements OnInit {
   }
 
   getUserId(): void {
-    this.userId = this.usuarioService.getUserIdByToken();
+    this.userId = this.usuarioService.getUserId();
+    console.log(this.userId);
+    console.log(this.usuarioService.getUserId());
   }
 
   getHabilidades(): void {

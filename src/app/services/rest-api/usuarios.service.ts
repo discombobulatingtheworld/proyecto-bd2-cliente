@@ -11,6 +11,7 @@ export class UsuariosService {
 
   token: undefined | String = undefined;
   user: undefined | Usuario = undefined;
+  protected userId: number = 0;
 
   constructor(
     private http: HttpClient,
@@ -27,27 +28,25 @@ export class UsuariosService {
     this.token = undefined;
   }
 
-  getUserIdByToken(): number {
-    let userId: number = 0;
-    let token = sessionStorage.getItem('jwt');
-    console.log(token);
+  getUserId(): number {
+    this.getUserIdByToken();
+    return this.userId;
+  }
 
-    //const headers = { Authorization: `Bearer ${token}` };
+  getUserIdByToken(): void {
+    let token = sessionStorage.getItem('jwt');
+
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token
     });
-    this.http.post<any>('http://localhost:3001/api/autenticacion', { headers }).subscribe(
+    this.http.post<any>('http://localhost:3001/api/autenticacion', {}, { headers }).subscribe(
       response => {
-        console.log('aca estoy');
-        console.log(response);
-        userId = response.userId;
+        this.userId = response.userId;
       },
       error => {
         console.log(error)
       }
     )
-    console.log(userId);
-    return userId;
   }
 
   getHabilidadesUsuario(id: number): Observable<Habilidad[]> {

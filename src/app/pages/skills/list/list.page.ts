@@ -26,15 +26,18 @@ export class ListPage implements OnInit {
 
   ngOnInit() {
     //this.skills = USER_SKILLS;
-    this.getUserId();
+
+    this.getUserId(); // Problema al entrar por primera vez o al recargar
     this.getHabilidadesUsuario();
   }
 
+
   getUserId(): void {
-    this.userId = this.usuarioService.getUserIdByToken();
+    this.userId = this.usuarioService.getUserId();
+    console.log(this.userId);
+    console.log(this.usuarioService.getUserId());
   }
 
-  // getHabilidadesUsuario hardcodeado, falta obtener el id del usuario en sesion 
   getHabilidadesUsuario(): void {
     this.usuarioService.getHabilidadesUsuario(this.userId).subscribe((habilidades) => {
       this.skills = habilidades;
