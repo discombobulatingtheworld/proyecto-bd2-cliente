@@ -1,9 +1,21 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { SolicitudRelevante } from 'src/app/types/dtos/solicitud-relevante';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SolicitudesService {
 
-  constructor() { }
+  constructor(
+    private http: HttpClient,
+  ) { }
+
+  getSolicitudesRelevantes(id: number): Observable<SolicitudRelevante[]> {
+    let token = sessionStorage.getItem('jwt');
+    console.log(token);
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.get<SolicitudRelevante[]>('http://localhost:3001/api/usuarios/' + id + '/solicitudes/relevantes');
+  }
 }
