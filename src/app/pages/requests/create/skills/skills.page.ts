@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { Habilidad } from 'src/app/types/dtos/habilidad';
 import { SKILLS } from 'src/app/dummy/data';
+import { HabilidadesService } from 'src/app/services/Habilidades/habilidades.service';
 
 @Component({
   selector: 'app-skills',
@@ -18,15 +19,23 @@ export class SkillsPage implements OnInit {
   protected alertMessage: string = '';
   protected alertButtons: any = ['Ok'];
 
-  protected availableSkills: Habilidad[] = SKILLS;
+  protected availableSkills: Habilidad[] = [];
 
   constructor(
     private navCtrl: NavController,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private habilidadService: HabilidadesService
   ) { }
 
   ngOnInit() {
     this.menuCtrl.enable(false);
+    this.getHabilidades()
+  }
+
+  getHabilidades(): void {
+    this.habilidadService.getHabilidades().subscribe((habilidades) => {
+      this.availableSkills = habilidades;
+    })
   }
 
   protected onBack() {
