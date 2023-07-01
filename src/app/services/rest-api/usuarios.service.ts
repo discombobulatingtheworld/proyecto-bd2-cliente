@@ -11,7 +11,7 @@ export class UsuariosService {
 
   token: undefined | String = undefined;
   user: undefined | Usuario = undefined;
-  protected userId: number = 0;
+  // protected userId: number = 0;
 
   constructor(
     private http: HttpClient,
@@ -27,31 +27,42 @@ export class UsuariosService {
     this.user = undefined;
     this.token = undefined;
   }
-
-  getUserId(): number {
-    this.getUserIdByToken();
-    return this.userId;
-  }
-
-  getUserIdByToken(): void {
+  
+  getUserByToken(): Observable<Usuario> {
     let token = sessionStorage.getItem('jwt');
 
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token
     });
-    this.http.post<any>('http://localhost:3001/api/autenticacion', {}, { headers }).subscribe(
-      response => {
-        this.userId = response.userId;
-      },
-      error => {
-        console.log(error)
-      }
-    )
+
+    console.log(token)
+    return this.http.post<Usuario>('http://localhost:3001/api/autenticacion', {}, { headers });
   }
 
   getHabilidadesUsuario(id: number): Observable<Habilidad[]> {
     let token = sessionStorage.getItem('jwt');
     const headers = { Authorization: `Bearer ${token}` };
     return this.http.get<Habilidad[]>('http://localhost:3001/api/usuarios/' + id + '/habilidades', { headers });
+  }
+
+  deleteHabilidadUsuario(idUsuario: number, idHabilidad: number): Observable<any> {
+    let token = sessionStorage.getItem('jwt');
+
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token
+    });
+    return this.http.delete<any>(`http://localhost:3001/api/usuarios/${idUsuario}/habilidades/${idHabilidad}`, { headers });
+  }
+
+  insertHabilidadUsuario(idUsuario: number, idHabilidad: number): Observable<any> {
+    let token = sessionStorage.getItem('jwt');
+
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token
+    });
+    return this.http.post<any>(`http://localhost:3001/api/usuarios/${idUsuario}/habilidades`, {
+      userId: idUsuario,
+      skillId: idHabilidad
+    } ,{ headers });
   }
 }

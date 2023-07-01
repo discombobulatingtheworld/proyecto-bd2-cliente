@@ -15,7 +15,6 @@ import { SolicitudActiva } from 'src/app/types/dtos/solicitud-activa';
 })
 export class ActiveComponent implements OnInit {
   protected activeRequests: SolicitudActiva[] = [];
-  protected userId!: number;
 
   constructor(
     private navCtrl: NavController,
@@ -24,9 +23,8 @@ export class ActiveComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getUserId();
     this.getSolicitudesActivas();
-   }
+  }
 
   protected onSelectRequest(request: SolicitudActiva) {
     this.navCtrl.navigateForward('/requests/request/active', {
@@ -36,14 +34,12 @@ export class ActiveComponent implements OnInit {
     });
   }
 
-  getUserId(): void {
-    this.userId = this.userService.getUserId();
-    console.log(this.userId);
-  }
-
   getSolicitudesActivas(): void {
-    this.solicitudesService.getSolicitudesActivas(this.userId).subscribe((solicitudes) => {
-      this.activeRequests = solicitudes;
-    });
+    this.userService.getUserByToken().subscribe(
+      response => {
+        this.solicitudesService.getSolicitudesActivas(response.id).subscribe((solicitudes) => {
+          this.activeRequests = solicitudes;
+        });
+      });
   }
 }

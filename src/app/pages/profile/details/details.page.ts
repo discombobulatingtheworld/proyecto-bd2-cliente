@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { Usuario } from 'src/app/types/dtos/usuario';
 import { PROFILES } from 'src/app/dummy/data';
+import { HttpClient } from '@angular/common/http';
+import { UsuariosService } from '../../../services/rest-api/usuarios.service';
 
 @Component({
   selector: 'app-details',
@@ -18,11 +20,25 @@ export class DetailsPage implements OnInit {
 
   constructor(
     private navCtrl: NavController,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private httpClient: HttpClient,
+    private usuariosService: UsuariosService
   ) { }
 
   ngOnInit() {
-    this.profile = PROFILES[0];
+    this.getPerfilInit();
+  }
+
+
+  getPerfilInit() {
+    this.usuariosService.getUserByToken().subscribe(
+      response => {
+        this.profile = response;
+      },
+      error => {
+        console.log(error)
+      }
+    )
   }
 
   ionViewWillEnter() {

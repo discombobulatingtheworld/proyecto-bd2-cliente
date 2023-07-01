@@ -25,23 +25,17 @@ export class ListPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    //this.skills = USER_SKILLS;
-
-    this.getUserId(); // Problema al entrar por primera vez o al recargar
     this.getHabilidadesUsuario();
   }
 
-
-  getUserId(): void {
-    this.userId = this.usuarioService.getUserId();
-    console.log(this.userId);
-    console.log(this.usuarioService.getUserId());
-  }
-
   getHabilidadesUsuario(): void {
-    this.usuarioService.getHabilidadesUsuario(this.userId).subscribe((habilidades) => {
-      this.skills = habilidades;
-    })
+    this.usuarioService.getUserByToken().subscribe((response) => {
+      this.usuarioService.getHabilidadesUsuario(response.id).subscribe((habilidades) => {
+        this.skills = habilidades;
+      })
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   ionViewWillEnter() {
@@ -53,6 +47,14 @@ export class ListPage implements OnInit {
   }
 
   protected onDelete(skill: Habilidad) {
-    // TODO: Implementar borrado de habilidad
+    this.usuarioService.getUserByToken().subscribe((response) => {
+      this.usuarioService.deleteHabilidadUsuario(response.id, skill.id).subscribe((response) => {
+        this.getHabilidadesUsuario();
+      }, (error) => {
+        console.log(error);
+      });
+    }, (error) => {
+      console.log(error);
+    });
   }
 }

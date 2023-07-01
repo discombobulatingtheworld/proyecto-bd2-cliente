@@ -30,18 +30,8 @@ export class ModifyPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getUserId();
     this.getHabilidades();
     this.getHabilidadesUsuario();
-
-    // el obtener las habilidades disponibles no funciona con las habilidades traidas de bd
-    this.availableSkills = this.allSkills.map(s => [s, this.mySkills.filter(us => us.id === s.id).length > 0]);
-  }
-
-  getUserId(): void {
-    this.userId = this.usuarioService.getUserId();
-    console.log(this.userId);
-    console.log(this.usuarioService.getUserId());
   }
 
   getHabilidades(): void {
@@ -51,9 +41,14 @@ export class ModifyPage implements OnInit {
   }
 
   getHabilidadesUsuario(): void {
-    this.usuarioService.getHabilidadesUsuario(this.userId).subscribe((habilidades) => {
-      this.mySkills = habilidades;
-    })
+    this.usuarioService.getUserByToken().subscribe((response) => {
+      this.usuarioService.getHabilidadesUsuario(response.id).subscribe((habilidades) => {
+        this.mySkills = habilidades;
+        this.availableSkills = this.allSkills.map(s => [s, habilidades.filter(us => us.id === s.id).length > 0]);
+      })
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   ionViewWillEnter() {
@@ -65,7 +60,27 @@ export class ModifyPage implements OnInit {
   }
 
   protected onSave(): void {
-    this.navCtrl.navigateBack('/skills');
+    this.usuarioService.getUserByToken().subscribe(({ id }) => {
+      this.availableSkills.forEach(([skill, checked]) => {
+        if (checked && !this.mySkills.includes(skill)) {
+          this.usuarioService.insertHabilidadUsuario(id, skill.id).subscribe((response) => {
+            console.log(response);
+          }, (error) => {
+            console.log(error);
+          })
+        } else if (!checked && this.mySkills.includes(skill)) {
+          this.usuarioService.deleteHabilidadUsuario(id, skill.id).subscribe(
+            (response) => {
+
+            }, (error) => {
+              console.log(error);
+            });
+        }
+        this.navCtrl.navigateBack('/skills');
+      })
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   protected onFilter(): void {

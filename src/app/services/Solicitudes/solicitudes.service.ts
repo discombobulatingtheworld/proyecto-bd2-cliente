@@ -16,8 +16,11 @@ export class SolicitudesService {
   getSolicitudesRelevantes(id: number): Observable<SolicitudRelevante[]> {
     let token = sessionStorage.getItem('jwt');
     console.log(token);
-    const headers = { Authorization: `Bearer ${token}` };
-    return this.http.get<SolicitudRelevante[]>('http://localhost:3001/api/usuarios/' + id + '/solicitudes/relevantes', { headers });
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`);
+
+    return this.http.get<SolicitudRelevante[]>(`http://localhost:3001/api/usuarios/1/solicitudes/relevantes`, { headers });
   }
 
   getSolicitudesActivas(id: number): Observable<SolicitudActiva[]> {
