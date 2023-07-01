@@ -53,4 +53,16 @@ export class UsuariosService {
     });
     return this.http.delete<any>(`http://localhost:3001/api/usuarios/${idUsuario}/habilidades/${idHabilidad}`, { headers });
   }
+
+  insertHabilidadUsuario(idUsuario: number, idHabilidad: number): Observable<any> {
+    let token = sessionStorage.getItem('jwt');
+
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token
+    });
+    return this.http.post<any>(`http://localhost:3001/api/usuarios/${idUsuario}/habilidades`, {
+      userId: idUsuario,
+      skillId: idHabilidad
+    } ,{ headers });
+  }
 }

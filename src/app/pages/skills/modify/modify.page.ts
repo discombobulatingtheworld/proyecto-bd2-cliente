@@ -59,14 +59,31 @@ export class ModifyPage implements OnInit {
     this.navCtrl.navigateBack('/skills');
   }
 
-  public onSave(): void {
-    console.log('xd');
-    // this.navCtrl.navigateBack('/skills');
+  protected onSave(): void {
+    this.usuarioService.getUserByToken().subscribe(({ id }) => {
+      this.availableSkills.forEach(([skill, checked]) => {
+        if (checked && !this.mySkills.includes(skill)) {
+          this.usuarioService.insertHabilidadUsuario(id, skill.id).subscribe((response) => {
+            console.log(response);
+          }, (error) => {
+            console.log(error);
+          })
+        } else if (!checked && this.mySkills.includes(skill)) {
+          this.usuarioService.deleteHabilidadUsuario(id, skill.id).subscribe(
+            (response) => {
+
+            }, (error) => {
+              console.log(error);
+            });
+        }
+        this.navCtrl.navigateBack('/skills');
+      })
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   protected onFilter(): void {
-    console.log('xd');
-
     // TODO: Implementar filtro de habilidades
   }
 }
