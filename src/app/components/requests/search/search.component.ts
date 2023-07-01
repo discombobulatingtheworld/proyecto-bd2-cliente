@@ -13,7 +13,7 @@ import { UsuariosService } from 'src/app/services/rest-api/usuarios.service';
   styleUrls: ['./search.component.scss'],
   imports: [IonicModule, CommonModule]
 })
-export class SearchComponent  implements OnInit {
+export class SearchComponent implements OnInit {
   protected relevantRequests: SolicitudRelevante[] = [];
   protected userId!: number;
 
@@ -24,9 +24,8 @@ export class SearchComponent  implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getUserId();
     this.getSolicitudesRelevantes();
-   }
+  }
 
   protected onSelectRequest(request: SolicitudRelevante) {
     this.navCtrl.navigateForward('/requests/request/details', {
@@ -36,14 +35,20 @@ export class SearchComponent  implements OnInit {
     });
   }
 
-  getUserId(): void {
-    this.userId = this.userService.getUserId();
-    console.log(this.userId);
-  }
-
   getSolicitudesRelevantes(): void {
-    this.solicitudesService.getSolicitudesRelevantes(this.userId).subscribe((solicitudes) => {
-      this.relevantRequests = solicitudes;
-    });
+    this.userService.getUserByToken().subscribe(
+      response => {
+        this.solicitudesService.getSolicitudesRelevantes(response.id).subscribe((solicitudes) => {
+          this.relevantRequests = solicitudes;
+        },
+          error => {
+            console.error(error);
+          }
+        );
+      },
+      error => {
+        console.log(error)
+      }
+    )
   }
 }

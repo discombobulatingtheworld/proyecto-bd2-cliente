@@ -30,18 +30,8 @@ export class ModifyPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getUserId();
     this.getHabilidades();
     this.getHabilidadesUsuario();
-
-    // el obtener las habilidades disponibles no funciona con las habilidades traidas de bd
-    this.availableSkills = this.allSkills.map(s => [s, this.mySkills.filter(us => us.id === s.id).length > 0]);
-  }
-
-  getUserId(): void {
-    this.userId = this.usuarioService.getUserId();
-    console.log(this.userId);
-    console.log(this.usuarioService.getUserId());
   }
 
   getHabilidades(): void {
@@ -51,9 +41,14 @@ export class ModifyPage implements OnInit {
   }
 
   getHabilidadesUsuario(): void {
-    this.usuarioService.getHabilidadesUsuario(this.userId).subscribe((habilidades) => {
-      this.mySkills = habilidades;
-    })
+    this.usuarioService.getUserByToken().subscribe((response) => {
+      this.usuarioService.getHabilidadesUsuario(response.id).subscribe((habilidades) => {
+        this.mySkills = habilidades;
+        this.availableSkills = this.allSkills.map(s => [s, habilidades.filter(us => us.id === s.id).length > 0]);
+      })
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   ionViewWillEnter() {
@@ -64,11 +59,14 @@ export class ModifyPage implements OnInit {
     this.navCtrl.navigateBack('/skills');
   }
 
-  protected onSave(): void {
-    this.navCtrl.navigateBack('/skills');
+  public onSave(): void {
+    console.log('xd');
+    // this.navCtrl.navigateBack('/skills');
   }
 
   protected onFilter(): void {
+    console.log('xd');
+
     // TODO: Implementar filtro de habilidades
   }
 }
