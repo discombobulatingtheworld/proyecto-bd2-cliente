@@ -28,19 +28,20 @@
     <ion-grid>
       <ion-row>
         <ion-col size="12">
-          <ion-input label="Solicitud" placeholder="Solicitud" class="ion-text-end" [readonly]="true"
-            [(ngModel)]="request.title"></ion-input>
-          <ion-input label="Solicitante" placeholder="Solicitante" class="ion-text-end" [readonly]="true"
-            [(ngModel)]="request.requesterName + ' ' + request.requesterLastName"></ion-input>
-          <ion-input label="Conexión" placeholder="Conexión" class="ion-text-end" [readonly]="true"
-            [(ngModel)]="request.requesterProviderConnection"></ion-input>
-          <ion-textarea label="Descripción" placeholder="Descripción" [readonly]="true" labelPlacement="stacked"
-            [(ngModel)]="request.description"></ion-textarea>
-          <ion-input label="Localización" placeholder="Localización" [readonly]="true" [(ngModel)]="request.location"
-            labelPlacement="stacked"></ion-input>
-          <ion-input label="Habilidad" placeholder="Habilidad" class="ion-text-end" [readonly]="true"
-            [(ngModel)]="request.skill!.name"></ion-input>
-
+          <div *ngIf="request">
+            <ion-input label="Solicitud" placeholder="Solicitud" class="ion-text-end" [readonly]="true"
+              [(ngModel)]="request.title"></ion-input>
+            <ion-input label="Solicitante" placeholder="Solicitante" class="ion-text-end" [readonly]="true"
+              [(ngModel)]="request.requesterName + ' ' + request.requesterLastName"></ion-input>
+            <ion-input label="Conexión" placeholder="Conexión" class="ion-text-end" [readonly]="true"
+              [(ngModel)]="request.requesterProviderConnection"></ion-input>
+            <ion-textarea label="Descripción" placeholder="Descripción" [readonly]="true" labelPlacement="stacked"
+              [(ngModel)]="request.description"></ion-textarea>
+            <ion-input label="Localización" placeholder="Localización" [readonly]="true" [(ngModel)]="request.location"
+              labelPlacement="stacked"></ion-input>
+            <ion-input label="Habilidad" placeholder="Habilidad" class="ion-text-end" [readonly]="true"
+              [(ngModel)]="request.skill!.name"></ion-input>
+          </div>
         </ion-col>
       </ion-row>
     </ion-grid>

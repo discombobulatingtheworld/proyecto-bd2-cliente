@@ -4,6 +4,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SolicitudRelevante } from 'src/app/types/dtos/solicitud-relevante';
 import { SolicitudActiva } from 'src/app/types/dtos/solicitud-activa';
 import { SolicitudCreacion } from 'src/app/types/dtos/solicitud-creacion';
+import { Solicitud } from 'src/app/types/dtos/solicitud';
+import { SolicitudAceptacion } from 'src/app/types/dtos/solicitud-aceptacion';
+import { UsuariosService } from '../rest-api/usuarios.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +15,7 @@ export class SolicitudesService {
 
   constructor(
     private http: HttpClient,
+    private userService: UsuariosService
   ) { }
 
   getSolicitudesRelevantes(id: number): Observable<SolicitudRelevante[]> {
@@ -40,5 +44,30 @@ export class SolicitudesService {
     return this.http.post<any>(`http://localhost:3001/api/solicitudes`, {
       solicitud
     } ,{ headers });
+  }
+
+  getSolicitud(id: number): Observable<Solicitud> {
+    let token = sessionStorage.getItem('jwt');
+
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token
+    });
+
+    return this.http.get<Solicitud>(`http://localhost:3001/api/solicitudes/${id}`, { headers });
+  }
+
+  acceptSolicitud(id: number): Observable<any> {
+    let token = sessionStorage.getItem('jwt');
+    let providerId = this.userService.getActiveUserId();
+
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token
+    });
+
+    return this.http.put<any>(`http://localhost:3001/api/solicitudes/${id}/aceptar`, 
+      new SolicitudAceptacion()
+        .set('solicitudId', id)
+        .set('providerId', providerId)
+      , { headers });
   }
 }

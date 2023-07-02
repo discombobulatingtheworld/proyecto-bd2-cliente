@@ -17,14 +17,14 @@ import { MessageComponent } from './message/message.component';
 
 })
 export class ChatComponent  implements OnInit {
-  @Input() public request!: Solicitud;
+  @Input() public request: Solicitud | undefined;
   protected messages: Mensaje[] = [];
   protected newMessage: string = '';
 
   constructor() { }
 
   ngOnInit() {
-    this.messages = MESSAGES.filter(m => m.requestId === this.request.id);
+    this.messages = MESSAGES.filter(m => m.requestId === this.request!.id);
   }
 
   protected onSendMessage(): void {
