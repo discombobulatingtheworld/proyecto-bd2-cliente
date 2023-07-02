@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
+import { SolicitudesService } from 'src/app/services/Solicitudes/solicitudes.service';
 
 @Component({
   selector: 'app-complete',
@@ -14,10 +15,13 @@ export class CompletePage implements OnInit {
 
   constructor(
     private navCtrl: NavController,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
   ) { }
 
+
+
   ngOnInit() {
+
   }
 
   ionViewWillEnter() {
@@ -27,4 +31,6 @@ export class CompletePage implements OnInit {
   protected onReturnRequests() {
     this.navCtrl.navigateRoot('/requests/requests');
   }
+
+  
 }
