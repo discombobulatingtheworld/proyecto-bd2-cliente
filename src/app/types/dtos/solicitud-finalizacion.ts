@@ -1,11 +1,12 @@
 import { EstadoSolicitud } from "../estado-solicitud";
+import { SolicitudFinalizacionEstado } from "../solicitud-finalizacion-estado";
 
 export class SolicitudFinalizacion {
     [key: string]: any;
 
     public requestId: number;
     public userId: number;
-    public status: EstadoSolicitud | null;
+    public status: SolicitudFinalizacionEstado | null;
     public opinion: string;
 
     constructor() {
