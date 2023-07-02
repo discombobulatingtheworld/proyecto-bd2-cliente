@@ -59,19 +59,22 @@ export class ModifyPage implements OnInit {
     this.navCtrl.navigateBack('/skills');
   }
 
-  protected onSave(): void {
-    this.usuarioService.getUserByToken().subscribe(({ id }) => {
+  protected onSave(): void {  
+    this.usuarioService.getUserByToken().subscribe((response1) => {
       this.availableSkills.forEach(([skill, checked]) => {
-        if (checked && !this.mySkills.includes(skill)) {
-          this.usuarioService.insertHabilidadUsuario(id, skill.id).subscribe((response) => {
-            console.log(response);
+        if (checked && !this.mySkills.some(us => us.id === skill.id)) {
+        //if (checked && !this.mySkills.includes(skill)) {
+          this.usuarioService.insertHabilidadUsuario(response1.id, skill.id).subscribe((response2) => {
+            console.log(response2);
           }, (error) => {
             console.log(error);
           })
-        } else if (!checked && this.mySkills.includes(skill)) {
-          this.usuarioService.deleteHabilidadUsuario(id, skill.id).subscribe(
-            (response) => {
-
+        } else if (!checked && this.mySkills.some(us => us.id === skill.id)) {
+        //} else if (!checked && this.mySkills.includes(skill)) {
+          // TODO:No anda
+          this.usuarioService.deleteHabilidadUsuario(response1.id, skill.id).subscribe(
+            (response3) => {
+              console.log(response3);
             }, (error) => {
               console.log(error);
             });

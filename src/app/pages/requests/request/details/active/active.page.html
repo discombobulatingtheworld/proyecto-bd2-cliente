@@ -1,0 +1,44 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="onBack()">
+      <ion-back-button default-href="#"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Solicitud</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-buttons slot="start" (click)="onBack()">
+        <ion-back-button default-href="#"></ion-back-button>
+      </ion-buttons>
+      <ion-title size="large">Solicitud</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="grid-container">
+    <div class="grid-tabs">
+        <ion-segment value="details" [(ngModel)]="activeComponent" (ionChange)="onSegmentChange($event)">
+          <ion-segment-button value="details">
+            <ion-label>Detalles</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="chat">
+            <ion-label>Chat</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="finalize">
+            <ion-label>Finalizar</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+    <div class="grid-content">
+
+        <div [ngSwitch]="activeComponent" style="height: 100%;">
+          <app-request-details *ngSwitchCase="'details'" [request]="request"></app-request-details>
+          <app-request-chat *ngSwitchCase="'chat'" [request]="request"></app-request-chat>
+          <app-request-finalize *ngSwitchCase="'finalize'" [request]="request"></app-request-finalize>
+        </div>
+      </div>
+  </div>
+
+</ion-content>

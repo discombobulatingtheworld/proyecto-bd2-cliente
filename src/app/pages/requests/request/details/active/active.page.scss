@@ -1,0 +1,16 @@
+.grid-container {
+    display: grid;
+    height: 100%;
+    grid-template-columns: auto;
+    grid-template-rows: min-content 1fr;
+}
+
+.grid-tabs {
+    grid-row: 1;
+    grid-column: 1;
+}
+
+.grid-content {
+    grid-row: 2;
+    grid-column: 1;
+}
