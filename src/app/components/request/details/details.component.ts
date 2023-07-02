@@ -13,7 +13,7 @@ import { Solicitud } from 'src/app/types/dtos/solicitud';
   host: { style: 'height: 100%;' }
 })
 export class DetailsComponent  implements OnInit {
-  @Input() public request!: Solicitud;
+  @Input() public request: Solicitud | undefined;
 
   constructor() { }
 

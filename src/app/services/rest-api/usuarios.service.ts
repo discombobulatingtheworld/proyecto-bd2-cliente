@@ -49,6 +49,19 @@ export class UsuariosService {
     return this.http.get<Usuario>('http://localhost:3001/api/usuarios/' + userId, { headers });
   }
 
+  getActiveUserId(): number {
+    let token = sessionStorage.getItem('jwt');
+
+    if (token === null) {
+      return 0;
+    }
+
+    var decodedToken = this.jwtHelper.decodeToken(token);
+    var userId = decodedToken['userId'];
+
+    return userId;
+  }
+
   getConexionesUsuario(id: number): Observable<Conexion[]> {
     let token = sessionStorage.getItem('jwt');
     const headers = { Authorization: `Bearer ${token}` };

@@ -15,7 +15,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <div class="entry-wrapper">
+  <div class="entry-wrapper" *ngIf="request">
     <ion-input [(ngModel)]="newMessage" placeholder="Escribe un mensaje" rows="1" maxlength="500" color="primary"
       fill="solid"></ion-input>
     <ion-button slot="end" fill="clear" (click)="onSendMessage()" [disabled]="!newMessage">
