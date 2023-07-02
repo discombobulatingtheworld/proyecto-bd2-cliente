@@ -2,7 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular';
+import { SolicitudesService } from 'src/app/services/Solicitudes/solicitudes.service';
+import { UsuariosService } from 'src/app/services/rest-api/usuarios.service';
 import { Solicitud } from 'src/app/types/dtos/solicitud';
+import { SolicitudFinalizacion } from 'src/app/types/dtos/solicitud-finalizacion';
 import { SolicitudFinalizacionEstado, SolicitudFinalizacionEstadoMapping } from 'src/app/types/solicitud-finalizacion-estado';
 
 @Component({
@@ -13,7 +16,7 @@ import { SolicitudFinalizacionEstado, SolicitudFinalizacionEstadoMapping } from 
   imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule],
   host: { style: 'height: 100%;' }
 })
-export class FinalizeComponent  implements OnInit {
+export class FinalizeComponent implements OnInit {
   @Input() public request: Solicitud | undefined;
   protected newMessage: string = '';
 
@@ -33,6 +36,8 @@ export class FinalizeComponent  implements OnInit {
   constructor(
     private navCtrl: NavController,
     private formBuilder: FormBuilder,
+    private userService: UsuariosService,
+    private solicitudService: SolicitudesService
   ) { }
 
   ngOnInit() {
@@ -40,6 +45,29 @@ export class FinalizeComponent  implements OnInit {
   }
 
   protected onSubmit(): void {
+    let solicitudFinalizacion: SolicitudFinalizacion = new SolicitudFinalizacion();
+    solicitudFinalizacion.requestId = this.request?.id || 0;
+    solicitudFinalizacion.userId = this.userService.getActiveUserId();
+
+    if (this.requestFinalizationForm.value.status == SolicitudFinalizacionEstado.Solucionado) {
+      solicitudFinalizacion.status = SolicitudFinalizacionEstado.Solucionado;
+    } else if (this.requestFinalizationForm.value.status == SolicitudFinalizacionEstado.Cancelado) {
+      solicitudFinalizacion.status = SolicitudFinalizacionEstado.Cancelado;
+    }
+
+    if (this.requestFinalizationForm.value.opinion != null) {
+      solicitudFinalizacion.opinion = this.requestFinalizationForm.value.opinion;
+    }
+
+    this.solicitudService.finalizeSolicitud(solicitudFinalizacion).subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+    
     this.navCtrl.navigateRoot('/requests/requests');
   }
 

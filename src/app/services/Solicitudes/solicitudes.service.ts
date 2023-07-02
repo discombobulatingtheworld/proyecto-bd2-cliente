@@ -8,6 +8,7 @@ import { SolicitudCreacion } from 'src/app/types/dtos/solicitud-creacion';
 import { Solicitud } from 'src/app/types/dtos/solicitud';
 import { SolicitudAceptacion } from 'src/app/types/dtos/solicitud-aceptacion';
 import { UsuariosService } from '../rest-api/usuarios.service';
+import { SolicitudFinalizacion } from 'src/app/types/dtos/solicitud-finalizacion';
 import { Chat } from 'src/app/types/dtos/chat';
 
 @Injectable({
@@ -104,6 +105,23 @@ export class SolicitudesService {
       , { headers });
   }
 
+  finalizeSolicitud(solicitud: SolicitudFinalizacion): Observable<any> {
+    let token = sessionStorage.getItem('jwt');
+
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token
+    });
+
+    return this.http.put<any>(`http://localhost:3001/api/solicitudes/${solicitud.requestId}/finalizar`,
+      {
+        requestId: solicitud.requestId,
+        userId: solicitud.userId,
+        status: solicitud.status,
+        opinion: solicitud.opinion
+      }
+      , { headers });
+  }
+  
   getSolicitudChat(id: number): Observable<Chat> {
     let token = sessionStorage.getItem('jwt');
 
