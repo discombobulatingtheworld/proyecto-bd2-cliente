@@ -8,6 +8,7 @@ import { ChatComponent } from 'src/app/components/request/chat/chat.component';
 import { DetailsComponent } from 'src/app/components/request/details/details.component';
 import { REQUESTS } from 'src/app/dummy/data';
 import { Router } from '@angular/router';
+import { SolicitudesService } from 'src/app/services/Solicitudes/solicitudes.service';
 
 @Component({
   selector: 'app-active',
@@ -18,18 +19,23 @@ import { Router } from '@angular/router';
 })
 export class ActivePage implements OnInit {
   private requestId!: number;
-  public request!: Solicitud;
+  public request: Solicitud | undefined;
   protected activeComponent: string = 'details';
 
   constructor(
     private navCtrl: NavController,
     private menuCtrl: MenuController,
-    private router: Router
+    private router: Router,
+    private solicitudesService: SolicitudesService,
   ) { }
 
   ngOnInit() {
     this.requestId = this.router.getCurrentNavigation()?.extras.state?.['requestId'];
-    this.request = REQUESTS.find(request => request.id === this.requestId)!;
+    this.solicitudesService.getSolicitud(this.requestId).subscribe(
+      response => {
+        this.request = response;
+      }
+    );
   }
 
   ionViewWillEnter() {

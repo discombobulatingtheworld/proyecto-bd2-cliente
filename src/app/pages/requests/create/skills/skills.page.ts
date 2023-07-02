@@ -38,7 +38,7 @@ export class SkillsPage implements OnInit {
   ngOnInit() {
     this.menuCtrl.enable(false);
     this.getHabilidadesUsuario();
-    const { title, description, location } = this.solicitudesService.getSolicitud();
+    const { title, description, location } = this.solicitudesService.getSolicitudCrear();
     this.title = title;
     this.description = description;
     this.location = location;

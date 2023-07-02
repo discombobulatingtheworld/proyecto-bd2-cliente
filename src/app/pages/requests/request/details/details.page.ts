@@ -5,6 +5,7 @@ import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { Solicitud } from 'src/app/types/dtos/solicitud';
 import { REQUESTS } from 'src/app/dummy/data';
 import { Router } from '@angular/router';
+import { SolicitudesService } from 'src/app/services/Solicitudes/solicitudes.service';
 
 @Component({
   selector: 'app-details',
@@ -15,17 +16,22 @@ import { Router } from '@angular/router';
 })
 export class DetailsPage implements OnInit {
   private requestId!: number;
-  protected request!: Solicitud;
+  protected request: Solicitud | undefined;
 
   constructor(
     private navCtrl: NavController,
     private menuCtrl: MenuController,
-    private router: Router
+    private router: Router,
+    private solicitudesService: SolicitudesService,
   ) { }
 
   ngOnInit() {
     this.requestId = this.router.getCurrentNavigation()?.extras.state?.['requestId'];
-    this.request = REQUESTS.find(request => request.id === this.requestId)!;
+    this.solicitudesService.getSolicitud(this.requestId).subscribe(
+      response => {
+        this.request = response;
+      }
+    );
   }
 
   ionViewWillEnter() {
@@ -37,6 +43,10 @@ export class DetailsPage implements OnInit {
   }
 
   protected onAccept(): void {
-    //this.navCtrl.navigateForward('/requests/request/active', { state: { requestId: this.requestId } });
+    this.solicitudesService.acceptSolicitud(this.requestId).subscribe(
+      response => {
+        this.navCtrl.navigateForward('/requests/request/active', { state: { requestId: this.requestId } });
+      }
+    );
   }
 }

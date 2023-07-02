@@ -3,13 +3,14 @@ import { Usuario } from 'src/app/types/dtos/usuario';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Habilidad } from 'src/app/types/dtos/habilidad';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Conexion } from 'src/app/types/dtos/conexion';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuariosService {
-
+  jwtHelper: JwtHelperService = new JwtHelperService();
   token: undefined | String = undefined;
   user: undefined | Usuario = undefined;
   // protected userId: number = 0;
@@ -32,11 +33,33 @@ export class UsuariosService {
   getUserByToken(): Observable<Usuario> {
     let token = sessionStorage.getItem('jwt');
 
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + token
-    });
+    if (token === null) {
+      return new Observable<Usuario>(observer => {
+        observer.next(undefined);
+        observer.complete();
+      });
+    }
 
-    return this.http.post<Usuario>('http://localhost:3001/api/autenticacion', {}, { headers });
+    var decodedToken = this.jwtHelper.decodeToken(token);
+    var userId = decodedToken['userId'];
+
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer ' + token
+    });
+    return this.http.get<Usuario>('http://localhost:3001/api/usuarios/' + userId, { headers });
+  }
+
+  getActiveUserId(): number {
+    let token = sessionStorage.getItem('jwt');
+
+    if (token === null) {
+      return 0;
+    }
+
+    var decodedToken = this.jwtHelper.decodeToken(token);
+    var userId = decodedToken['userId'];
+
+    return userId;
   }
 
   getConexionesUsuario(id: number): Observable<Conexion[]> {
@@ -95,5 +118,22 @@ export class UsuariosService {
       userId: idUsuario,
       skillId: idHabilidad
     }, { headers });
+  }
+
+  updateUsuario(usuario: Usuario): Observable<any> {
+    let token = sessionStorage.getItem('jwt');
+
+    console.log({...usuario});
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token
+    });
+    return this.http.put<any>(`http://localhost:3001/api/usuarios/${usuario.id}`, 
+    { 
+      name: usuario.name,
+      lastName: usuario.lastName,
+      nick: usuario.nick,
+      email: usuario.email
+     },
+    { headers });
   }
 }

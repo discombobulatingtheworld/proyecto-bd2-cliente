@@ -14,7 +14,7 @@ import { SolicitudFinalizacionEstado, SolicitudFinalizacionEstadoMapping } from 
   host: { style: 'height: 100%;' }
 })
 export class FinalizeComponent  implements OnInit {
-  @Input() public request!: Solicitud;
+  @Input() public request: Solicitud | undefined;
   protected newMessage: string = '';
 
   public solicitudFinalizacionEstadoMapping = SolicitudFinalizacionEstadoMapping;
