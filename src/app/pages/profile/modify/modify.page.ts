@@ -5,6 +5,7 @@ import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { Usuario } from 'src/app/types/dtos/usuario';
 import { PROFILES } from 'src/app/dummy/data';
 import { ControlValidators as CustomControlValidators } from 'src/app/helpers/validators';
+import { UsuariosService } from 'src/app/services/rest-api/usuarios.service';
 
 @Component({
   selector: 'app-modify',
@@ -32,17 +33,29 @@ export class ModifyPage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private menuCtrl: MenuController,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private usuariosService: UsuariosService
   ) { }
 
   ngOnInit() {
-    this.profile = PROFILES[0];
-    this.profileModificationForm.setValue({
-      name: this.profile.name,
-      lastName: this.profile.lastName,
-      nick: this.profile.nick,
-      email: this.profile.email
-    });
+    this.getPerfilInit();
+  }
+
+  getPerfilInit() {
+    this.usuariosService.getUserByToken().subscribe(
+      response => {
+        this.profile = response;
+        this.profileModificationForm.setValue({
+          name: response.name,
+          lastName: response.lastName,
+          nick: response.nick,
+          email: response.email
+        });
+      },
+      error => {
+        console.log(error)
+      }
+    )
   }
 
   ionViewWillEnter() {
@@ -50,6 +63,24 @@ export class ModifyPage implements OnInit {
   }
 
   protected onSave(): void {
+    if (this.profileModificationForm.value.name != null && this.profileModificationForm.value.lastName != null &&
+      this.profileModificationForm.value.nick != null && this.profileModificationForm.value.email != null && this.profile != null) {
+
+      this.profile.name = this.profileModificationForm.value.name;
+      this.profile.lastName = this.profileModificationForm.value.lastName;
+      this.profile.nick = this.profileModificationForm.value.nick;
+      this.profile.email = this.profileModificationForm.value.email;
+
+      this.usuariosService.updateUsuario(this.profile).subscribe(
+        response => {
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    }
+
     this.navCtrl.navigateRoot('profile');
   }
 

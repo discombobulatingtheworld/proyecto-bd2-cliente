@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SolicitudRelevante } from 'src/app/types/dtos/solicitud-relevante';
 import { SolicitudActiva } from 'src/app/types/dtos/solicitud-activa';
+import { SolicitudCreacion } from 'src/app/types/dtos/solicitud-creacion';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +29,16 @@ export class SolicitudesService {
     console.log(token);
     const headers = { Authorization: `Bearer ${token}` };
     return this.http.get<SolicitudActiva[]>('http://localhost:3001/api/usuarios/' + id + '/solicitudes/activas', { headers });
+  }
+
+  insertSolicitud(solicitud: SolicitudCreacion): Observable<any> {
+    let token = sessionStorage.getItem('jwt');
+
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token
+    });
+    return this.http.post<any>(`http://localhost:3001/api/solicitudes`, {
+      solicitud
+    } ,{ headers });
   }
 }
