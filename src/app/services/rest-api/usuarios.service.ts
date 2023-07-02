@@ -64,4 +64,21 @@ export class UsuariosService {
       skillId: idHabilidad
     } ,{ headers });
   }
+
+  updateUsuario(usuario: Usuario): Observable<any> {
+    let token = sessionStorage.getItem('jwt');
+
+    console.log({...usuario});
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token
+    });
+    return this.http.put<any>(`http://localhost:3001/api/usuarios/${usuario.id}`, 
+    { 
+      name: usuario.name,
+      lastName: usuario.lastName,
+      nick: usuario.nick,
+      email: usuario.email
+     },
+    { headers });
+  }
 }

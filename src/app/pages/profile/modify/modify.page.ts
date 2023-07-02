@@ -63,6 +63,24 @@ export class ModifyPage implements OnInit {
   }
 
   protected onSave(): void {
+    if (this.profileModificationForm.value.name != null && this.profileModificationForm.value.lastName != null &&
+      this.profileModificationForm.value.nick != null && this.profileModificationForm.value.email != null && this.profile != null) {
+
+      this.profile.name = this.profileModificationForm.value.name;
+      this.profile.lastName = this.profileModificationForm.value.lastName;
+      this.profile.nick = this.profileModificationForm.value.nick;
+      this.profile.email = this.profileModificationForm.value.email;
+
+      this.usuariosService.updateUsuario(this.profile).subscribe(
+        response => {
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    }
+
     this.navCtrl.navigateRoot('profile');
   }
 
