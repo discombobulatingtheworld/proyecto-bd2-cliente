@@ -28,6 +28,7 @@ export class ChatComponent  implements OnInit {
 
   ngOnInit() {
     this.loadMessages();
+    setInterval(() => this.loadMessages(), 1000);
   }
 
   protected loadMessages(): void {
