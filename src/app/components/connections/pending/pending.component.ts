@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { PENDING_CONNECTIONS } from 'src/app/dummy/data';
+import { UsuariosService } from 'src/app/services/rest-api/usuarios.service';
 import { Conexion } from 'src/app/types/dtos/conexion';
 
 @Component({
@@ -15,13 +16,32 @@ import { Conexion } from 'src/app/types/dtos/conexion';
 export class PendingComponent  implements OnInit {
   protected pendingConnections: Conexion[] = [];
 
-  constructor() { }
+  constructor(
+    private usuarioService: UsuariosService,
+  ) { }
 
   ngOnInit() {
-    this.pendingConnections = PENDING_CONNECTIONS;
+    this.getConnections();
+  }
+
+  getConnections(): void {
+    this.usuarioService.getUserByToken().subscribe(({id}) => {
+      this.usuarioService.getConexionesUsuario(id).subscribe((connections) => {
+        console.log(connections)
+        this.pendingConnections = connections.filter((connection) => !connection.aceptada);
+      })
+    });
   }
 
   protected onAcceptConnection(connection: Conexion): void {
-    // TODO: Implementar
+    this.usuarioService.getUserByToken().subscribe(({id}) => {
+      console.log({id, 'userid': connection.userId})
+      this.usuarioService.acceptConnectionToUser(id, connection.userId).subscribe((request) => {
+        console.log(request)
+        this.getConnections();
+      }
+      
+      )
+    });
   }
 }
