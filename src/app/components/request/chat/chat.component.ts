@@ -6,6 +6,7 @@ import { MESSAGES } from 'src/app/dummy/data';
 import { Mensaje } from 'src/app/types/dtos/mensaje';
 import { Solicitud } from 'src/app/types/dtos/solicitud';
 import { MessageComponent } from './message/message.component';
+import { SolicitudesService } from 'src/app/services/Solicitudes/solicitudes.service';
 
 @Component({
   standalone: true,
@@ -21,13 +22,31 @@ export class ChatComponent  implements OnInit {
   protected messages: Mensaje[] = [];
   protected newMessage: string = '';
 
-  constructor() { }
+  constructor(
+    private solicitudService: SolicitudesService,
+  ) { }
 
   ngOnInit() {
-    this.messages = MESSAGES.filter(m => m.requestId === this.request!.id);
+    this.loadMessages();
+    setInterval(() => this.loadMessages(), 1000);
+  }
+
+  protected loadMessages(): void {
+    this.solicitudService.getSolicitudChat(this.request?.id as number).subscribe(
+      response => {
+        this.messages = response.messages;
+      }
+    );
   }
 
   protected onSendMessage(): void {
-
+    if (this.newMessage.length > 0) {
+      this.solicitudService.sendMessage(this.request?.id as number, this.newMessage).subscribe(
+        response => {
+          this.newMessage = '';
+          this.loadMessages();
+        }
+      );
+    }
   }
 }

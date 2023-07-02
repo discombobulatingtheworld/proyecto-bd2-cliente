@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
+import { SolicitudesService } from 'src/app/services/Solicitudes/solicitudes.service';
 
 @Component({
   selector: 'app-details',
@@ -26,7 +27,8 @@ export class DetailsPage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private formBuilder: FormBuilder,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private solicitudesService: SolicitudesService
   ) { }
 
   ngOnInit() {
@@ -41,7 +43,26 @@ export class DetailsPage implements OnInit {
   }
 
   protected onNext() {
-    this.navCtrl.navigateForward('/requests/create/skills');
+    const titleForm = this.requestCreationDetailsForm.get('title');
+    const descriptionForm = this.requestCreationDetailsForm.get('description');
+    const locationForm = this.requestCreationDetailsForm.get('location');
+
+    if(titleForm === null || descriptionForm === null || locationForm === null || titleForm?.invalid || descriptionForm?.invalid || locationForm?.invalid) {
+      return alert('Por favor, rellene todos los campos');
+    }
+
+    const title = titleForm.value;
+    const description = descriptionForm.value;
+    const location = locationForm.value;
+
+    if (title && description && location) {
+      this.solicitudesService.empezarSolicitud(
+        title,
+        description,
+        location
+      );
+      this.navCtrl.navigateForward('/requests/create/skills');
+    }
   }
 
 }

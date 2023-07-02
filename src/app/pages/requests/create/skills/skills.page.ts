@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { Habilidad } from 'src/app/types/dtos/habilidad';
 import { SKILLS } from 'src/app/dummy/data';
+import { SolicitudesService } from 'src/app/services/Solicitudes/solicitudes.service';
+import { UsuariosService } from 'src/app/services/rest-api/usuarios.service';
 import { HabilidadesService } from 'src/app/services/Habilidades/habilidades.service';
 
 @Component({
@@ -21,21 +23,35 @@ export class SkillsPage implements OnInit {
 
   protected availableSkills: Habilidad[] = [];
 
+  protected title: string = '';
+  protected description: string = '';
+  protected location: string = '';
+
   constructor(
     private navCtrl: NavController,
     private menuCtrl: MenuController,
-    private habilidadService: HabilidadesService
+    private solicitudesService: SolicitudesService,
+    private usuarioService: UsuariosService,
+    private habilidadesService: HabilidadesService
   ) { }
 
   ngOnInit() {
     this.menuCtrl.enable(false);
-    this.getHabilidades()
+    this.getHabilidadesUsuario();
+    const { title, description, location } = this.solicitudesService.getSolicitudCrear();
+    this.title = title;
+    this.description = description;
+    this.location = location;
   }
 
-  getHabilidades(): void {
-    this.habilidadService.getHabilidades().subscribe((habilidades) => {
-      this.availableSkills = habilidades;
-    })
+  getHabilidadesUsuario(): void {
+    this.usuarioService.getUserByToken().subscribe((response) => {
+      this.habilidadesService.getHabilidades().subscribe((habilidades) => {
+        this.availableSkills = habilidades;
+      })
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   protected onBack() {
@@ -46,6 +62,14 @@ export class SkillsPage implements OnInit {
   }
 
   protected onSkillSelected(skill: Habilidad, event: any) {
-    this.navCtrl.navigateForward('/requests/create/complete');
+    this.usuarioService.getUserByToken().subscribe(({ id }) => {
+      this.solicitudesService.crearSolicitud(id, skill).subscribe((response) => {
+        this.navCtrl.navigateForward('/requests/create/complete');
+      }, (error) => {
+        alert('Error al crear la solicitud');
+      });
+    }, (error) => {
+      alert('Error al obtener el usuario');
+    });
   }
 }
