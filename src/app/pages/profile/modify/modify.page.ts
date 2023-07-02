@@ -50,7 +50,6 @@ export class ModifyPage implements OnInit {
   }
 
   protected onSave(): void {
-    console.log('xd');
     this.navCtrl.navigateRoot('profile');
   }
 

@@ -35,7 +35,6 @@ export class UsuariosService {
       'Authorization': 'Bearer ' + token
     });
 
-    console.log(token)
     return this.http.post<Usuario>('http://localhost:3001/api/autenticacion', {}, { headers });
   }
 
