@@ -5,6 +5,7 @@ import { ACTIVE_REQUESTS } from 'src/app/dummy/data';
 import { SolicitudesService } from 'src/app/services/Solicitudes/solicitudes.service';
 import { UsuariosService } from 'src/app/services/rest-api/usuarios.service';
 import { SolicitudActiva } from 'src/app/types/dtos/solicitud-activa';
+import { RolUsuario } from 'src/app/types/rol-usuario';
 
 @Component({
   standalone: true,
@@ -15,6 +16,7 @@ import { SolicitudActiva } from 'src/app/types/dtos/solicitud-activa';
 })
 export class ActiveComponent implements OnInit {
   protected activeRequests: SolicitudActiva[] = [];
+  protected userId!: number;
 
   constructor(
     private navCtrl: NavController,
@@ -24,6 +26,7 @@ export class ActiveComponent implements OnInit {
 
   ngOnInit() {
     this.getSolicitudesActivas();
+    this.userId = this.userService.getActiveUserId();
   }
 
   protected onSelectRequest(request: SolicitudActiva) {
@@ -35,11 +38,21 @@ export class ActiveComponent implements OnInit {
   }
 
   getSolicitudesActivas(): void {
-    this.userService.getUserByToken().subscribe(
-      response => {
-        this.solicitudesService.getSolicitudesActivas(response.id).subscribe((solicitudes) => {
-          this.activeRequests = solicitudes;
-        });
-      });
+    let userId: number = this.userService.getActiveUserId();
+    this.solicitudesService.getSolicitudesActivas(userId).subscribe((solicitudes) => {
+      this.activeRequests = solicitudes;
+    });
+  };
+
+ getPassiveUserName(solicitud: SolicitudActiva): string { 
+    if (solicitud.requesterId === this.userId) {
+      return solicitud.providerName + ' ' + solicitud.providerLastName;
+    }
+    else if (solicitud.providerId === this.userId) {
+      return solicitud.requesterName + ' ' + solicitud.requesterLastName;
+    }
+    else {
+      return '';
+    }
   }
 }

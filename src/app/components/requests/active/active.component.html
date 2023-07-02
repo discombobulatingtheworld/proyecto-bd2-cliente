@@ -10,7 +10,7 @@
                 <ion-card-content>
                   <ion-card-subtitle>{{request.skill!.name}}</ion-card-subtitle>
                   <ion-card-title>{{request.title}}</ion-card-title>
-                  <ion-card-subtitle>{{request.getPassiveUserName()}}</ion-card-subtitle>
+                  <ion-card-subtitle>{{getPassiveUserName(request)}}</ion-card-subtitle>
                 </ion-card-content>
               </ion-card>
               <ion-card color="warning" *ngSwitchCase="'abierta'">
@@ -24,14 +24,14 @@
                 <ion-card-content>
                   <ion-card-subtitle>{{request.skill!.name}}</ion-card-subtitle>
                   <ion-card-title>{{request.title}}</ion-card-title>
-                  <ion-card-subtitle>{{request.getPassiveUserName()}}</ion-card-subtitle>
+                  <ion-card-subtitle>{{getPassiveUserName(request)}}</ion-card-subtitle>
                 </ion-card-content>
               </ion-card>
               <ion-card color="primary" *ngSwitchCase="'activa'">
                 <ion-card-content>
                   <ion-card-subtitle>{{request.skill!.name}}</ion-card-subtitle>
                   <ion-card-title>{{request.title}}</ion-card-title>
-                  <ion-card-subtitle>{{request.getPassiveUserName()}}</ion-card-subtitle>
+                  <ion-card-subtitle>{{getPassiveUserName(request)}}</ion-card-subtitle>
                 </ion-card-content>
               </ion-card>
             </div>
