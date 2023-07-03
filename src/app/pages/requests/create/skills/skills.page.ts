@@ -7,6 +7,7 @@ import { SKILLS } from 'src/app/dummy/data';
 import { SolicitudesService } from 'src/app/services/Solicitudes/solicitudes.service';
 import { UsuariosService } from 'src/app/services/rest-api/usuarios.service';
 import { HabilidadesService } from 'src/app/services/Habilidades/habilidades.service';
+import { ToastService } from 'src/app/services/utilities/toast.service';
 
 @Component({
   selector: 'app-skills',
@@ -20,6 +21,7 @@ export class SkillsPage implements OnInit {
   protected isAlertOpen: boolean = false;
   protected alertMessage: string = '';
   protected alertButtons: any = ['Ok'];
+  protected userId: number = 0;
 
   protected availableSkills: Habilidad[] = [];
 
@@ -32,10 +34,15 @@ export class SkillsPage implements OnInit {
     private menuCtrl: MenuController,
     private solicitudesService: SolicitudesService,
     private usuarioService: UsuariosService,
-    private habilidadesService: HabilidadesService
+    private habilidadesService: HabilidadesService,
+    private toastService: ToastService
   ) { }
 
   ngOnInit() {
+    this.userId = this.usuarioService.getActiveUserId()
+  }
+
+  ionViewWillEnter() {
     this.menuCtrl.enable(false);
     this.getHabilidadesUsuario();
     const { title, description, location } = this.solicitudesService.getSolicitudCrear();
@@ -45,12 +52,13 @@ export class SkillsPage implements OnInit {
   }
 
   getHabilidadesUsuario(): void {
-    this.usuarioService.getUserByToken().subscribe((response) => {
-      this.habilidadesService.getHabilidades().subscribe((habilidades) => {
+    this.habilidadesService.getHabilidades().subscribe({
+      next: (habilidades) => {
         this.availableSkills = habilidades;
-      })
-    }, (error) => {
-      console.log(error);
+      },
+      error: (error) => {
+        this.toastService.presentToast(error, 2000, 'danger', 'bottom');
+      }
     });
   }
 
@@ -59,17 +67,17 @@ export class SkillsPage implements OnInit {
   }
 
   protected onFilterSkills() {
+      // TODO: Implementar filtro de habilidades
   }
 
   protected onSkillSelected(skill: Habilidad, event: any) {
-    this.usuarioService.getUserByToken().subscribe(({ id }) => {
-      this.solicitudesService.crearSolicitud(id, skill).subscribe((response) => {
+    this.solicitudesService.crearSolicitud(this.userId, skill).subscribe({
+      next: (response) => {
         this.navCtrl.navigateForward('/requests/create/complete');
-      }, (error) => {
-        alert('Error al crear la solicitud');
-      });
-    }, (error) => {
-      alert('Error al obtener el usuario');
+      },
+      error: (error) => {
+        this.toastService.presentToast(error, 2000, 'danger', 'bottom');
+      }
     });
   }
 }

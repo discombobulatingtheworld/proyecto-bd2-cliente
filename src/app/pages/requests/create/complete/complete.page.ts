@@ -18,10 +18,7 @@ export class CompletePage implements OnInit {
     private menuCtrl: MenuController,
   ) { }
 
-
-
   ngOnInit() {
-
   }
 
   ionViewWillEnter() {
@@ -31,6 +28,4 @@ export class CompletePage implements OnInit {
   protected onReturnRequests() {
     this.navCtrl.navigateRoot('/requests/requests');
   }
-
-  
 }

@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { LoginService } from '../../../services/Login/login.service';
+import { ToastService } from 'src/app/services/utilities/toast.service';
 import { UsuariosService } from 'src/app/services/rest-api/usuarios.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +29,8 @@ export class LoginPage implements OnInit {
     private navCtrl: NavController,
     private menuCtrl: MenuController,
     private LoginService: LoginService,
-    
+    private toastService: ToastService,
+    private usuariosService: UsuariosService
   ) { }
 
   ngOnInit() {
@@ -38,9 +39,6 @@ export class LoginPage implements OnInit {
   ionViewWillEnter() {
     this.menuCtrl.enable(false);
   }
-  // protected async login() {
-  //       this.navCtrl.navigateRoot('/requests/requests');
-  // }
 
   protected async login() {
     if (
@@ -52,15 +50,22 @@ export class LoginPage implements OnInit {
       this.loginForm.value.email === undefined ||
       this.loginForm.value.password === undefined
     ) {
-      return alert('Por favor, ingrese un email y una contraseña válidos.');
+      this.toastService.presentToast('Todos los campos son requeridos', 2000, 'danger', 'bottom');
+      return;
     }
     const email: String = this.loginForm.value.email;
     const password: String = this.loginForm.value.password;
-    try {
-      this.LoginService.auth(email, password);
-    } catch (err) {
-      alert('Email o contraseña incorrectos.')
-    }
+
+    this.LoginService.auth(email, password).subscribe({
+      next: (data) => {
+        const accessToken = data.accessToken;
+        this.usuariosService.setUserToken(accessToken);
+        this.navCtrl.navigateRoot('/requests/requests');
+      },
+      error: (err) => {
+        this.toastService.presentToast(err, 2000, 'danger', 'bottom');
+      }
+    });
   }
 
   protected setAlertOpen(isOpen: boolean) {
@@ -72,6 +77,7 @@ export class LoginPage implements OnInit {
   }
 
   protected onRegister() {
+    this.LoginService.initRegistro();
     this.navCtrl.navigateForward('/authentication/registration/start');
   }
 }

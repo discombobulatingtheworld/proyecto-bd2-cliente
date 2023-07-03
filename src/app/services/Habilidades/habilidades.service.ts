@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Habilidad } from 'src/app/types/dtos/habilidad';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { HabilidadesCategoria } from 'src/app/types/dtos/habilidades-categoria';
+import { ConfigService } from '../config/config.service';
+import { HttpRequestHandlerService } from '../utilities/http-request-handler.service';
 
 
 @Injectable({
@@ -12,14 +14,18 @@ export class HabilidadesService {
 
   constructor(
     private http: HttpClient,
+    private configService: ConfigService,
+    private httpHandler: HttpRequestHandlerService
   ) { }
 
   getHabilidades(): Observable<Habilidad[]> {
-    return this.http.get<Habilidad[]>('http://localhost:3001/api/habilidades');
+    let req = this.http.get<HttpResponse<Habilidad[]>>(`${this.configService.getBackendUrl()}/api/habilidades`);
+    return this.httpHandler.handleRequest(req);
   }
 
   getHabilidadesCategoria(): Observable<HabilidadesCategoria[]> {
-    return this.http.get<HabilidadesCategoria[]>('http://localhost:3001/api/habilidades/categorias');
+    let req = this.http.get<HttpResponse<HabilidadesCategoria[]>>(`${this.configService.getBackendUrl()}/api/habilidades/categorias`);	
+    return this.httpHandler.handleRequest(req);
   }
 }
 

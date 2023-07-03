@@ -6,6 +6,7 @@ import { Solicitud } from 'src/app/types/dtos/solicitud';
 import { REQUESTS } from 'src/app/dummy/data';
 import { Router } from '@angular/router';
 import { SolicitudesService } from 'src/app/services/Solicitudes/solicitudes.service';
+import { ToastService } from 'src/app/services/utilities/toast.service';
 
 @Component({
   selector: 'app-details',
@@ -23,19 +24,16 @@ export class DetailsPage implements OnInit {
     private menuCtrl: MenuController,
     private router: Router,
     private solicitudesService: SolicitudesService,
+    private toastService: ToastService
   ) { }
 
   ngOnInit() {
     this.requestId = this.router.getCurrentNavigation()?.extras.state?.['requestId'];
-    this.solicitudesService.getSolicitud(this.requestId).subscribe(
-      response => {
-        this.request = response;
-      }
-    );
   }
 
   ionViewWillEnter() {
     this.menuCtrl.enable(false);
+    this.getSolicitud();
   }
 
   protected onBack(): void {
@@ -43,10 +41,24 @@ export class DetailsPage implements OnInit {
   }
 
   protected onAccept(): void {
-    this.solicitudesService.acceptSolicitud(this.requestId).subscribe(
-      response => {
+    this.solicitudesService.acceptSolicitud(this.requestId).subscribe({
+      next: (response) => {
         this.navCtrl.navigateForward('/requests/request/active', { state: { requestId: this.requestId } });
+      },
+      error: (error) => {
+        this.toastService.presentToast(error, 2000, 'danger', 'bottom');
       }
-    );
+    });
+  }
+
+  getSolicitud(): void {
+    this.solicitudesService.getSolicitud(this.requestId).subscribe({
+      next: (solicitud) => {
+        this.request = solicitud;
+      },
+      error: (error) => {
+        this.toastService.presentToast(error, 2000, 'danger', 'bottom');
+      }
+    });
   }
 }

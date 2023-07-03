@@ -9,6 +9,7 @@ import { DetailsComponent } from 'src/app/components/request/details/details.com
 import { REQUESTS } from 'src/app/dummy/data';
 import { Router } from '@angular/router';
 import { SolicitudesService } from 'src/app/services/Solicitudes/solicitudes.service';
+import { ToastService } from 'src/app/services/utilities/toast.service';
 
 @Component({
   selector: 'app-active',
@@ -27,19 +28,16 @@ export class ActivePage implements OnInit {
     private menuCtrl: MenuController,
     private router: Router,
     private solicitudesService: SolicitudesService,
+    private toastService: ToastService
   ) { }
 
   ngOnInit() {
     this.requestId = this.router.getCurrentNavigation()?.extras.state?.['requestId'];
-    this.solicitudesService.getSolicitud(this.requestId).subscribe(
-      response => {
-        this.request = response;
-      }
-    );
   }
 
   ionViewWillEnter() {
     this.menuCtrl.enable(false);
+    this.getSolicitud();
   }
 
   protected onBack(): void {
@@ -50,4 +48,14 @@ export class ActivePage implements OnInit {
     this.activeComponent = event.detail.value;
   }
 
+  getSolicitud(): void {
+    this.solicitudesService.getSolicitud(this.requestId).subscribe({
+      next: (solicitud) => {
+        this.request = solicitud;
+      },
+      error: (error) => {
+        this.toastService.presentToast(error, 2000, 'danger', 'bottom');
+      }
+    });
+  }
 }

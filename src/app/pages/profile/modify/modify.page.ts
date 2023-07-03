@@ -6,6 +6,7 @@ import { Usuario } from 'src/app/types/dtos/usuario';
 import { PROFILES } from 'src/app/dummy/data';
 import { ControlValidators as CustomControlValidators } from 'src/app/helpers/validators';
 import { UsuariosService } from 'src/app/services/rest-api/usuarios.service';
+import { ToastService } from 'src/app/services/utilities/toast.service';
 
 @Component({
   selector: 'app-modify',
@@ -34,32 +35,33 @@ export class ModifyPage implements OnInit {
     private navCtrl: NavController,
     private menuCtrl: MenuController,
     private formBuilder: FormBuilder,
-    private usuariosService: UsuariosService
+    private usuariosService: UsuariosService,
+    private toastService: ToastService
   ) { }
 
   ngOnInit() {
-    this.getPerfilInit();
   }
 
   getPerfilInit() {
-    this.usuariosService.getUserByToken().subscribe(
-      response => {
-        this.profile = response;
+    this.usuariosService.getUserByToken().subscribe({
+      next: (usuario) => {
+        this.profile = usuario;
         this.profileModificationForm.setValue({
-          name: response.name,
-          lastName: response.lastName,
-          nick: response.nick,
-          email: response.email
+          name: usuario.name,
+          lastName: usuario.lastName,
+          nick: usuario.nick,
+          email: usuario.email
         });
       },
-      error => {
-        console.log(error)
+      error: (error) => {
+        this.toastService.presentToast(error, 2000, 'danger', 'bottom');
       }
-    )
+    });
   }
 
   ionViewWillEnter() {
     this.menuCtrl.enable(false);
+    this.getPerfilInit();
   }
 
   protected onSave(): void {
@@ -71,17 +73,16 @@ export class ModifyPage implements OnInit {
       this.profile.nick = this.profileModificationForm.value.nick;
       this.profile.email = this.profileModificationForm.value.email;
 
-      this.usuariosService.updateUsuario(this.profile).subscribe(
-        response => {
-          console.log(response);
+      this.usuariosService.updateUsuario(this.profile).subscribe({
+        next: (usuario) => {
+          this.toastService.presentToast('Perfil actualizado', 2000, 'success', 'bottom');
+          this.navCtrl.navigateRoot('profile');
         },
-        error => {
-          console.log(error);
+        error: (error) => {
+          this.toastService.presentToast(error, 2000, 'danger', 'bottom');
         }
-      )
+      });
     }
-
-    this.navCtrl.navigateRoot('profile');
   }
 
   protected onBack(): void {

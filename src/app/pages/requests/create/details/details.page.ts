@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { SolicitudesService } from 'src/app/services/Solicitudes/solicitudes.service';
+import { ToastService } from 'src/app/services/utilities/toast.service';
 
 @Component({
   selector: 'app-details',
@@ -28,7 +29,8 @@ export class DetailsPage implements OnInit {
     private navCtrl: NavController,
     private formBuilder: FormBuilder,
     private menuCtrl: MenuController,
-    private solicitudesService: SolicitudesService
+    private solicitudesService: SolicitudesService,
+    private toastService: ToastService
   ) { }
 
   ngOnInit() {
@@ -48,7 +50,8 @@ export class DetailsPage implements OnInit {
     const locationForm = this.requestCreationDetailsForm.get('location');
 
     if(titleForm === null || descriptionForm === null || locationForm === null || titleForm?.invalid || descriptionForm?.invalid || locationForm?.invalid) {
-      return alert('Por favor, rellene todos los campos');
+      this.toastService.presentToast('Todos los campos son requeridos', 2000, 'danger', 'bottom');
+      return;
     }
 
     const title = titleForm.value;

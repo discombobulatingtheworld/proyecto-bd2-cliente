@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { PENDING_CONNECTIONS } from 'src/app/dummy/data';
 import { UsuariosService } from 'src/app/services/rest-api/usuarios.service';
+import { ToastService } from 'src/app/services/utilities/toast.service';
 import { Conexion } from 'src/app/types/dtos/conexion';
 
 @Component({
@@ -13,35 +14,39 @@ import { Conexion } from 'src/app/types/dtos/conexion';
   styleUrls: ['./pending.component.scss'],
   imports: [IonicModule, CommonModule, FormsModule],
 })
-export class PendingComponent  implements OnInit {
+export class PendingComponent implements OnInit {
   protected pendingConnections: Conexion[] = [];
+  protected userId: number = 0;
 
   constructor(
     private usuarioService: UsuariosService,
+    private toastService: ToastService
   ) { }
 
   ngOnInit() {
+    this.userId = this.usuarioService.getActiveUserId()
     this.getConnections();
   }
 
-  getConnections(): void {
-    this.usuarioService.getUserByToken().subscribe(({id}) => {
-      this.usuarioService.getConexionesUsuario(id).subscribe((connections) => {
-        console.log(connections)
+  protected getConnections(): void {
+    this.usuarioService.getConexionesUsuario(this.userId).subscribe({
+      next: (connections) => {
         this.pendingConnections = connections.filter((connection) => !connection.aceptada);
-      })
+      },
+      error: (error) => {
+        this.toastService.presentToast(error, 2000, 'danger', 'bottom');
+      }
     });
   }
 
   protected onAcceptConnection(connection: Conexion): void {
-    this.usuarioService.getUserByToken().subscribe(({id}) => {
-      console.log({id, 'userid': connection.userId})
-      this.usuarioService.acceptConnectionToUser(id, connection.userId).subscribe((request) => {
-        console.log(request)
+    this.usuarioService.acceptConnectionToUser(this.userId, connection.userId).subscribe({
+      next: (request) => {
         this.getConnections();
+      },
+      error: (error) => {
+        this.toastService.presentToast(error, 2000, 'danger', 'bottom');
       }
-      
-      )
     });
   }
 }

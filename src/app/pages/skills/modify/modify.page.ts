@@ -6,6 +6,7 @@ import { Habilidad } from 'src/app/types/dtos/habilidad';
 import { SKILLS, USER_SKILLS } from 'src/app/dummy/data';
 import { HabilidadesService } from 'src/app/services/Habilidades/habilidades.service';
 import { UsuariosService } from 'src/app/services/rest-api/usuarios.service';
+import { ToastService } from 'src/app/services/utilities/toast.service';
 
 @Component({
   selector: 'app-modify',
@@ -15,7 +16,6 @@ import { UsuariosService } from 'src/app/services/rest-api/usuarios.service';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class ModifyPage implements OnInit {
-
   protected title: string = 'Editar Habilidades';
   protected allSkills: Habilidad[] = [];
   protected mySkills: Habilidad[] = [];
@@ -26,33 +26,41 @@ export class ModifyPage implements OnInit {
     private navCtrl: NavController,
     private menuCtrl: MenuController,
     private habilidadService: HabilidadesService,
-    private usuarioService: UsuariosService
+    private usuarioService: UsuariosService,
+    private toastService: ToastService
   ) { }
 
   ngOnInit() {
-    this.getHabilidades();
-    this.getHabilidadesUsuario();
+    this.userId = this.usuarioService.getActiveUserId()
   }
 
   getHabilidades(): void {
-    this.habilidadService.getHabilidades().subscribe((habilidades) => {
-      this.allSkills = habilidades;
-    })
+    this.habilidadService.getHabilidades().subscribe({
+      next: (response) => {
+          this.allSkills = response;
+      },
+      error: (error) => {
+        this.toastService.presentToast(error , 2000, 'danger', 'bottom');
+      }
+    });
   }
 
   getHabilidadesUsuario(): void {
-    this.usuarioService.getUserByToken().subscribe((response) => {
-      this.usuarioService.getHabilidadesUsuario(response.id).subscribe((habilidades) => {
+    this.usuarioService.getHabilidadesUsuario(this.userId).subscribe({
+      next: (habilidades) => {
         this.mySkills = habilidades;
         this.availableSkills = this.allSkills.map(s => [s, habilidades.filter(us => us.id === s.id).length > 0]);
-      })
-    }, (error) => {
-      console.log(error);
+      },
+      error: (error) => {
+        this.toastService.presentToast(error, 2000, 'danger', 'bottom');
+      }
     });
   }
 
   ionViewWillEnter() {
     this.menuCtrl.enable(false);
+    this.getHabilidades();
+    this.getHabilidadesUsuario();
   }
 
   protected onBack(): void {
@@ -60,29 +68,27 @@ export class ModifyPage implements OnInit {
   }
 
   protected onSave(): void {  
-    this.usuarioService.getUserByToken().subscribe((response1) => {
-      this.availableSkills.forEach(([skill, checked]) => {
-        if (checked && !this.mySkills.some(us => us.id === skill.id)) {
-        //if (checked && !this.mySkills.includes(skill)) {
-          this.usuarioService.insertHabilidadUsuario(response1.id, skill.id).subscribe((response2) => {
-            console.log(response2);
-          }, (error) => {
-            console.log(error);
-          })
-        } else if (!checked && this.mySkills.some(us => us.id === skill.id)) {
-        //} else if (!checked && this.mySkills.includes(skill)) {
-          // TODO:No anda
-          this.usuarioService.deleteHabilidadUsuario(response1.id, skill.id).subscribe(
-            (response3) => {
-              console.log(response3);
-            }, (error) => {
-              console.log(error);
-            });
-        }
-        this.navCtrl.navigateBack('/skills');
-      })
-    }, (error) => {
-      console.log(error);
+    this.availableSkills.forEach(([skill, checked]) => {
+      if (checked && !this.mySkills.some(us => us.id === skill.id)) {
+        this.usuarioService.insertHabilidadUsuario(this.userId, skill.id).subscribe({
+          next: (response) => {
+            this.toastService.presentToast('Habilidades modificadas', 2000, 'success', 'bottom');
+          },
+          error: (error) => {
+            this.toastService.presentToast(error, 2000);
+          }
+        });
+      } else if (!checked && this.mySkills.some(us => us.id === skill.id)) {
+        this.usuarioService.deleteHabilidadUsuario(this.userId, skill.id).subscribe({
+          next: (response) => {
+            this.toastService.presentToast('Habilidades modificadas', 2000, 'success', 'bottom');
+          },
+          error: (error) => {
+            this.toastService.presentToast(error, 2000);
+          }
+        });
+      }
+      this.navCtrl.navigateBack('/skills');
     });
   }
 

@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { Habilidad } from 'src/app/types/dtos/habilidad';
-import { USER_SKILLS } from 'src/app/dummy/data';
 import { UsuariosService } from 'src/app/services/rest-api/usuarios.service';
+import { ToastService } from 'src/app/services/utilities/toast.service';
 
 @Component({
   selector: 'app-list',
@@ -21,25 +21,28 @@ export class ListPage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private menuCtrl: MenuController,
-    private usuarioService: UsuariosService
+    private usuarioService: UsuariosService,
+    private toastService: ToastService
   ) { }
 
   ngOnInit() {
-    this.getHabilidadesUsuario();
+    this.userId = this.usuarioService.getActiveUserId()
   }
 
   getHabilidadesUsuario(): void {
-    this.usuarioService.getUserByToken().subscribe((response) => {
-      this.usuarioService.getHabilidadesUsuario(response.id).subscribe((habilidades) => {
+    this.usuarioService.getHabilidadesUsuario(this.userId).subscribe({
+      next: (habilidades) => {
         this.skills = habilidades;
-      })
-    }, (error) => {
-      console.log(error);
+      },
+      error: (error) => {
+        this.toastService.presentToast(error, 2000, 'danger', 'bottom');
+      }
     });
   }
 
   ionViewWillEnter() {
     this.menuCtrl.enable(true);
+    this.getHabilidadesUsuario();
   }
 
   protected onEdit() {
@@ -47,14 +50,14 @@ export class ListPage implements OnInit {
   }
 
   protected onDelete(skill: Habilidad) {
-    this.usuarioService.getUserByToken().subscribe((response) => {
-      this.usuarioService.deleteHabilidadUsuario(response.id, skill.id).subscribe((response) => {
+    this.usuarioService.deleteHabilidadUsuario(this.userId, skill.id).subscribe({
+      next: (response) => {
+        this.toastService.presentToast('Habilidad eliminada', 2000, 'success', 'bottom');
         this.getHabilidadesUsuario();
-      }, (error) => {
-        console.log(error);
-      });
-    }, (error) => {
-      console.log(error);
+      },
+      error: (error) => {
+        this.toastService.presentToast(error, 2000, 'danger', 'bottom');
+      }
     });
   }
 }

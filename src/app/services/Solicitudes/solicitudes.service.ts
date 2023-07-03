@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { SolicitudRelevante } from 'src/app/types/dtos/solicitud-relevante';
 import { SolicitudActiva } from 'src/app/types/dtos/solicitud-activa';
 import { Habilidad } from 'src/app/types/dtos/habilidad';
@@ -10,6 +10,8 @@ import { SolicitudAceptacion } from 'src/app/types/dtos/solicitud-aceptacion';
 import { UsuariosService } from '../rest-api/usuarios.service';
 import { SolicitudFinalizacion } from 'src/app/types/dtos/solicitud-finalizacion';
 import { Chat } from 'src/app/types/dtos/chat';
+import { ConfigService } from '../config/config.service';
+import { HttpRequestHandlerService } from '../utilities/http-request-handler.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +23,9 @@ export class SolicitudesService {
 
   constructor(
     private http: HttpClient,
-    private userService: UsuariosService
+    private userService: UsuariosService,
+    private configService: ConfigService,
+    private httpHandler: HttpRequestHandlerService
   ) { }
 
   getSolicitudesRelevantes(id: number): Observable<SolicitudRelevante[]> {
@@ -30,14 +34,15 @@ export class SolicitudesService {
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`);
 
-    return this.http.get<SolicitudRelevante[]>(`http://localhost:3001/api/usuarios/1/solicitudes/relevantes`, { headers });
+    let req = this.http.get<HttpResponse<SolicitudRelevante[]>>(`${this.configService.getBackendUrl()}/api/usuarios/1/solicitudes/relevantes`, { headers });
+    return this.httpHandler.handleRequest(req);
   }
 
   getSolicitudesActivas(id: number): Observable<SolicitudActiva[]> {
     let token = sessionStorage.getItem('jwt');
-    console.log(token);
     const headers = { Authorization: `Bearer ${token}` };
-    return this.http.get<SolicitudActiva[]>('http://localhost:3001/api/usuarios/' + id + '/solicitudes/activas', { headers });
+    let req = this.http.get<HttpResponse<SolicitudActiva[]>>(`${this.configService.getBackendUrl()}/api/usuarios/` + id + '/solicitudes/activas', { headers });
+    return this.httpHandler.handleRequest(req);
   }
 
   empezarSolicitud(title: string, description: string, location: string): void {
@@ -67,17 +72,20 @@ export class SolicitudesService {
       "requesterId": id,
       "skill": skill.id
     }
-    return this.http.post('http://localhost:3001/api/solicitudes', solicitud, { headers });
+    let req = this.http.post<HttpResponse<void>>(`${this.configService.getBackendUrl()}/api/solicitudes`, solicitud, { headers });
+    return this.httpHandler.handleRequest(req);
   }
+
   insertSolicitud(solicitud: SolicitudCreacion): Observable<any> {
     let token = sessionStorage.getItem('jwt');
 
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token
     });
-    return this.http.post<any>(`http://localhost:3001/api/solicitudes`, {
+    let req = this.http.post<HttpResponse<any>>(`${this.configService.getBackendUrl()}/api/solicitudes`, {
       solicitud
     }, { headers });
+    return this.httpHandler.handleRequest(req);
   }
 
   getSolicitud(id: number): Observable<Solicitud> {
@@ -87,7 +95,8 @@ export class SolicitudesService {
       'Authorization': 'Bearer ' + token
     });
 
-    return this.http.get<Solicitud>(`http://localhost:3001/api/solicitudes/${id}`, { headers });
+    let req = this.http.get<HttpResponse<Solicitud>>(`${this.configService.getBackendUrl()}/api/solicitudes/${id}`, { headers });
+    return this.httpHandler.handleRequest(req);
   }
 
   acceptSolicitud(id: number): Observable<any> {
@@ -98,11 +107,12 @@ export class SolicitudesService {
       'Authorization': 'Bearer ' + token
     });
 
-    return this.http.put<any>(`http://localhost:3001/api/solicitudes/${id}/aceptar`,
+    let req = this.http.put<HttpResponse<any>>(`${this.configService.getBackendUrl()}/api/solicitudes/${id}/aceptar`,
       new SolicitudAceptacion()
         .set('solicitudId', id)
         .set('providerId', providerId)
       , { headers });
+    return this.httpHandler.handleRequest(req);
   }
 
   finalizeSolicitud(solicitud: SolicitudFinalizacion): Observable<any> {
@@ -112,7 +122,7 @@ export class SolicitudesService {
       'Authorization': 'Bearer ' + token
     });
 
-    return this.http.put<any>(`http://localhost:3001/api/solicitudes/${solicitud.requestId}/finalizar`,
+    let req = this.http.put<HttpResponse<any>>(`${this.configService.getBackendUrl()}/api/solicitudes/${solicitud.requestId}/finalizar`,
       {
         requestId: solicitud.requestId,
         userId: solicitud.userId,
@@ -120,6 +130,7 @@ export class SolicitudesService {
         opinion: solicitud.opinion
       }
       , { headers });
+    return this.httpHandler.handleRequest(req);
   }
   
   getSolicitudChat(id: number): Observable<Chat> {
@@ -129,7 +140,8 @@ export class SolicitudesService {
       'Authorization': 'Bearer ' + token
     });
 
-    return this.http.get<any>(`http://localhost:3001/api/solicitudes/${id}/chat`, { headers });
+    let req = this.http.get<HttpResponse<Chat>>(`${this.configService.getBackendUrl()}/api/solicitudes/${id}/chat`, { headers });
+    return this.httpHandler.handleRequest(req);
   }
 
   sendMessage(id: number, message: string): Observable<void> {
@@ -139,8 +151,9 @@ export class SolicitudesService {
       'Authorization': 'Bearer ' + token
     });
 
-    return this.http.post<void>(`http://localhost:3001/api/solicitudes/${id}/chat/mensajes`, {
+    let req = this.http.post<HttpResponse<void>>(`${this.configService.getBackendUrl()}/api/solicitudes/${id}/chat/mensajes`, {
       contents: message
     }, { headers });
+    return this.httpHandler.handleRequest(req);
   }
 }

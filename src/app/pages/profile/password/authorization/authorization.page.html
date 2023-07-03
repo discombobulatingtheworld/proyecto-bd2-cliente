@@ -29,7 +29,7 @@
           <br>
 
           <form [formGroup]="authorizePasswordModificationForm" #authorizePasswordModificationEntryForm="ngForm">
-            <ion-input label="Código de Autorización" label-placement="stacked" type="text" fill="outline"
+            <ion-input label="Código de Autorización" label-placement="stacked" type="number" fill="outline"
               formControlName="authorizationCode" id="inputAuthorizationCode" placeholder="XXX-XXX"
               errorText="Invalid code" (ionChange)="onAuthorizationCodeChange()"></ion-input>
           </form>
