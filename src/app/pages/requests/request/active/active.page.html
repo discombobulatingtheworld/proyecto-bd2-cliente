@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" [scrollY]="false" style="max-height: 100%;">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-buttons slot="start" (click)="onBack()">
@@ -17,7 +17,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <div class="grid-container">
+  <div class="grid-container" style="max-height: 100%;">
     <div class="grid-tabs">
         <ion-segment value="details" [(ngModel)]="activeComponent" (ionChange)="onSegmentChange($event)">
           <ion-segment-button value="details">
@@ -31,8 +31,7 @@
           </ion-segment-button>
         </ion-segment>
       </div>
-    <div class="grid-content">
-
+    <div class="grid-content" style="overflow-y: auto; height: 100%;">
         <div [ngSwitch]="activeComponent" style="height: 100%;">
           <app-request-details *ngSwitchCase="'details'" [request]="request"></app-request-details>
           <app-request-chat *ngSwitchCase="'chat'" [request]="request"></app-request-chat>

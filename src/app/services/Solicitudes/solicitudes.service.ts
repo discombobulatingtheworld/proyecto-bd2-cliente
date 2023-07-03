@@ -34,7 +34,7 @@ export class SolicitudesService {
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`);
 
-    let req = this.http.get<HttpResponse<SolicitudRelevante[]>>(`${this.configService.getBackendUrl()}/api/usuarios/1/solicitudes/relevantes`, { headers });
+    let req = this.http.get<HttpResponse<SolicitudRelevante[]>>(`${this.configService.getBackendUrl()}/api/usuarios/${id}/solicitudes/relevantes`, { headers });
     return this.httpHandler.handleRequest(req);
   }
 

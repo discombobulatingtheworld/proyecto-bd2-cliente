@@ -1,20 +1,22 @@
 <div class="centered-content">
-  <ion-grid class="messages-list">
-    <ion-row>
-      <ion-col size="12">
-        <div *ngIf="request">
-          <ion-list lines="none">
-            <ion-item *ngFor="let message of messages">
-              <app-request-chat-message [message]="message"></app-request-chat-message>
-            </ion-item>
-          </ion-list>
-        </div>
-        <div *ngIf="!request">
-          <ion-text color="danger">No se ha encontrado la solicitud</ion-text>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-content #messagelist [scrollEvents]="true" class="messages-list" [scrollY]="true">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <div *ngIf="request">
+            <ion-list lines="none">
+              <ion-item *ngFor="let message of messages; let last = last">
+                <app-request-chat-message [message]="message"></app-request-chat-message>
+              </ion-item>
+            </ion-list>
+          </div>
+          <div *ngIf="!request">
+            <ion-text color="danger">No se ha encontrado la solicitud</ion-text>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
   <div class="entry-wrapper" *ngIf="request">
     <ion-input [(ngModel)]="newMessage" placeholder="Escribe un mensaje" rows="1" maxlength="500" color="primary"
       fill="solid"></ion-input>
