@@ -1,21 +1,26 @@
 <div class="centered-content">
-  <ion-grid>
-    <ion-row>
-      <ion-col size="12">
+  <ion-content #requestslist [scrollEvents]="true" class="requests-list" [scrollY]="true">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
 
-        <ion-list lines="none">
-          <ion-item *ngFor="let request of relevantRequests">
-            <ion-card color="primary" (click)="onSelectRequest(request)">
-              <ion-card-content>
-                <ion-card-subtitle>{{request.skill!.name}}</ion-card-subtitle>
-                <ion-card-title>{{request.title}}</ion-card-title>
-                <ion-card-subtitle>{{request.requesterName + ' ' + request.requesterLastName}}</ion-card-subtitle>
-              </ion-card-content>
-            </ion-card>
-          </ion-item>
-        </ion-list>
+          <ion-list lines="none">
+            <ion-item *ngFor="let request of relevantRequests">
+              <ion-card color="primary" (click)="onSelectRequest(request)">
+                <ion-card-content>
+                  <ion-card-subtitle>{{request.skill!.name}}</ion-card-subtitle>
+                  <ion-card-title>{{request.title}}</ion-card-title>
+                  <ion-card-subtitle>{{request.requesterName + ' ' + request.requesterLastName}}</ion-card-subtitle>
+                </ion-card-content>
+              </ion-card>
+            </ion-item>
+            <ion-item>
+              <div style="height: 80px; width: 100%;"></div>
+            </ion-item>
+          </ion-list>
 
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
 </div>

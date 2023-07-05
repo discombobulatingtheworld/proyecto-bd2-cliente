@@ -29,8 +29,7 @@ export class LoginPage implements OnInit {
     private navCtrl: NavController,
     private menuCtrl: MenuController,
     private LoginService: LoginService,
-    private toastService: ToastService,
-    private usuariosService: UsuariosService
+    private toastService: ToastService
   ) { }
 
   ngOnInit() {
@@ -57,9 +56,7 @@ export class LoginPage implements OnInit {
     const password: String = this.loginForm.value.password;
 
     this.LoginService.auth(email, password).subscribe({
-      next: (data) => {
-        const accessToken = data.accessToken;
-        this.usuariosService.setUserToken(accessToken);
+      next: (_) => {
         this.navCtrl.navigateRoot('/requests/requests');
       },
       error: (err) => {

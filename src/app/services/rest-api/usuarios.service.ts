@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Usuario } from 'src/app/types/dtos/usuario';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Habilidad } from 'src/app/types/dtos/habilidad';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -22,17 +22,6 @@ export class UsuariosService {
     private configService: ConfigService,
     private httpHandler: HttpRequestHandlerService
   ) { }
-
-  // POR AHORA SOLO GUARDA EL TOKEN EN EL SESSION STORAGE
-  setUserToken(accessToken: String) {
-    this.token = accessToken;
-    sessionStorage.setItem('jwt', accessToken as string);
-  }
-
-  clearUserToken() {
-    this.user = undefined;
-    this.token = undefined;
-  }
 
   getUserByToken(): Observable<Usuario> {
     let token = sessionStorage.getItem('jwt');

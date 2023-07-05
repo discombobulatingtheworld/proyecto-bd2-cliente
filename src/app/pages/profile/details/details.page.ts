@@ -7,6 +7,7 @@ import { PROFILES } from 'src/app/dummy/data';
 import { HttpClient } from '@angular/common/http';
 import { UsuariosService } from '../../../services/rest-api/usuarios.service';
 import { ToastService } from 'src/app/services/utilities/toast.service';
+import { LoginService } from 'src/app/services/Login/login.service';
 
 @Component({
   selector: 'app-details',
@@ -23,7 +24,8 @@ export class DetailsPage implements OnInit {
     private navCtrl: NavController,
     private menuCtrl: MenuController,
     private usuariosService: UsuariosService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private loginService: LoginService,
   ) { }
 
   ngOnInit() {
@@ -51,6 +53,7 @@ export class DetailsPage implements OnInit {
   }
 
   protected onLogout() {
+    this.loginService.logout();
     this.navCtrl.navigateRoot('');
   }
 

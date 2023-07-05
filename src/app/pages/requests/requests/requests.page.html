@@ -29,20 +29,25 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-segment value="search" [(ngModel)]="activeComponent" (ionChange)="onSegmentChange($event)">
-    <ion-segment-button value="search">
-      <ion-label>Buscar Solicitudes</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="active">
-      <ion-label>Solicitudes Activas</ion-label>
-    </ion-segment-button>
-  </ion-segment>
+  <div class="grid-container" style="max-height: 100%;">
+    <div class="grid-tabs">
+      <ion-segment value="search" [(ngModel)]="activeComponent" (ionChange)="onSegmentChange($event)">
+        <ion-segment-button value="search">
+          <ion-label>Buscar Solicitudes</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="active">
+          <ion-label>Solicitudes Activas</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
 
-  <div [ngSwitch]="activeComponent">
-    <app-requests-search *ngSwitchCase="'search'"></app-requests-search>
-    <app-requests-active *ngSwitchCase="'active'"></app-requests-active>
+    <div class="grid-content" style="overflow-y: auto; height: 100%;">
+      <div [ngSwitch]="activeComponent" style="height: 100%;">
+        <app-requests-search *ngSwitchCase="'search'"></app-requests-search>
+        <app-requests-active *ngSwitchCase="'active'"></app-requests-active>
+      </div>
+    </div>
   </div>
-
   <ion-fab slot="fixed" vertical="bottom">
     <ion-button shape="round" expand="block" fill="solid" type="button" (click)="onCreateRequest()">
       Solicitar Asistencia

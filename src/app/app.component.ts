@@ -5,6 +5,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { LoginService } from './services/Login/login.service';
+import { UsuariosService } from './services/rest-api/usuarios.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -22,5 +24,24 @@ export class AppComponent {
     { title: 'Habilidades', url: '/skills/list', icon: 'medal' },
   ];
   public labels = [/*'Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'*/];
-  constructor() { }
+
+  public title: string = 'AyudaYa';
+  public userName: string = 'Usuario';
+  public userEmail: string = 'Email';
+
+  constructor(
+    private loginService: LoginService,
+  ) {
+    this.loginService.userEmail$.subscribe({
+      next: (email) => {
+        this.userEmail = email;
+      }
+    });
+    this.loginService.userName$.subscribe({
+      next: (name) => {
+        this.userName = name;
+      }
+    });
+    this.loginService.loadLocalUser();
+  }
 }

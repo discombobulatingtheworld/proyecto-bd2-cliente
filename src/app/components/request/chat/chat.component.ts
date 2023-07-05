@@ -73,7 +73,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
           if (scroll) {
             setTimeout(() => {
-              this.messagelist.scrollToBottom(100);
+              this.messagelist.scrollToBottom(300);
             }, 100);
           }
         });
